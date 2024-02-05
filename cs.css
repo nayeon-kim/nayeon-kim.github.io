@@ -1,0 +1,129 @@
+/* Type Styling */
+.cs {font-family: 'Futura', sans-serif;}
+
+.cs-brow {
+	text-transform: uppercase;
+	color: rgba(255,255,255,0.5); /* base color */
+	font-size: 0.8em;
+	font-weight: 600;
+	letter-spacing: 1px;
+}
+
+
+/* Type Styling */
+.cs-caption {
+	margin-top: 20px;
+	font-size: 0.7em;
+	font-style: italic;
+	color: rgba(255,255,255,0.5); /* base color */
+}
+
+.cs h1 {
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+
+.project-details {}
+.project-details .row {
+	padding: 30px;
+	font-size: 0.9em;
+	text-align: center;
+}
+
+/* Title Styling */
+.cs-title {
+	padding: 140px 5%;	
+}
+
+.cs-company-logo {
+	width: 48px;
+}
+
+.cs-template-1 {
+	padding: 120px 5%;	
+}
+
+/* Section */
+.cs-template-2 {
+	padding: 60px 5%;	
+}
+
+/* Full width image template */
+.cs-img .row {
+	padding: 32px 5%;
+}
+
+/* case study nav */
+.cs-nav {}
+.cs-nav .btn {
+	background-color: #fff;
+	color: #232323;
+	border-radius: 20px;
+	box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease 0s;
+}
+
+/* Color Styling */
+.dark-background {
+	background-color: #232323;
+	color:#fff;
+}
+
+.light-background {
+	background-color: #F4F4F9;
+	color:#000;
+}
+
+/* Lyft Accent Purple Color */
+.lyft-point-background {
+	background-color: #785EF0;
+	color:#fff;
+}
+.lyft-point-color {
+	color:#785EF0;
+}
+
+/* Lyft Accent Moss Color */
+.lyft-point-background-moss {
+	background-color: #0A6E62;
+	color:#fff;
+}
+.lyft-point-color-moss {
+	color: #0A6E62;
+}
+
+/* Samsung Accent Blue Color */
+.samsung-point-color{background-color:#4B95BF;}
+
+.light-background .cs-caption {
+	color: rgba(35,35,35,0.5); /* hex #232323 color */
+}
+
+/* Numbering Styling */
+.point-number {
+	background-color:#785EF0;
+	color: #fff;
+	border-radius:50%;
+	width: 34px;
+	height: 34px;
+	padding: 3px;
+	text-align: center;
+}
+
+.row-brow-header {
+	padding-bottom: 40px;
+}
+
+.numbered-header {
+	display: flex;
+}
+
+.left-number {
+	margin-right: 18px;
+}
+
+
+
+
+
