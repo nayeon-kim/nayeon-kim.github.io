@@ -48,11 +48,11 @@ footer {
 	text-decoration: none;
 }
 
-/*
-a:active {
-text-decoration: underline; /* selected link */
+.cs a {
+	color: inherit; 
+	text-decoration: underline;
 }
-*/
+
 
 /* Type styling */
 
@@ -90,13 +90,13 @@ h2 {
 	color: #fff;
 }
 
-/* Home - Intro Section */
+/* Index: Intro Section */
 .hero {
 	max-width: 38em;
 }
 
 
-/* Work / Portfolio Section */
+/* Work / Portfolio Grid Section */
 /* ID for smooth scrolling */
 #portfolio {
 	scroll-behavior: smooth;
@@ -124,32 +124,7 @@ h2 {
 	width: auto;
 }
 
-/*.portfolio-container {*/
-	/*
-	display: flex;
-	background-color: #f5f5f5;
-	min-height: 400px;
-	width: auto;
-	margin: 10px;
-	overflow: hidden;
-	*/
-/*}*/
-
-/* TODO: override .row padding for portfolio-container
-
-.portfolio-container img {
-width: 100%; not sure about this
-height: 500px; TODO update when all images have standardized export size
-}
-*/
-
 /* Portfolio hover interaction */
 .portfolio-container img {transition: .5s ease all; width: 200%; object-fit:cover;}
 
 .portfolio-container img:hover {transform: scale(1.15);}
-
-/* Bottom Content (see work.css for portfolio) */
-.portfolio,{
-	padding: 80px 0;
-	text-transform: uppercase;
-}

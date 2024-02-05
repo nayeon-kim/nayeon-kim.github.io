@@ -12,7 +12,7 @@
 
 /* Type Styling */
 .cs-caption {
-	margin-top: 20px;
+	margin-top: 14px;
 	font-size: 0.7em;
 	font-style: italic;
 	color: rgba(255,255,255,0.5); /* base color */
@@ -22,7 +22,6 @@
 	font-weight: 600;
 	margin-bottom: 20px;
 }
-
 
 .project-details {}
 .project-details .row {
@@ -51,7 +50,7 @@
 
 /* Full width image template */
 .cs-img .row {
-	padding: 32px 5%;
+	padding: 32px 8%;
 }
 
 /* case study nav */
