@@ -108,12 +108,11 @@ h2 {
 	overflow: hidden;
 }
 
+/* Covers */
 #lyft-home {background-color: #785EF0;}
-
 #lyft-assistive {background-color: #0A6E62;}
-
 #samsung-sm {background-color: #4B95BF;}
-
+#samsung-st {background-color: #DBD56E;}
 #pomello {background-color: #494949;}
 
 .portfolio img {
