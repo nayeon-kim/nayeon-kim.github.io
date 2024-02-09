@@ -1,5 +1,8 @@
 /* Type Styling */
-.cs {font-family: 'Futura', sans-serif;}
+.cs {
+	font-family: 'Futura', sans-serif;
+	max-width: 100%;
+}
 
 .cs-brow {
 	text-transform: uppercase;
