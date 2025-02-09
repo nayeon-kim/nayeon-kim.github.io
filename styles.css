@@ -85,7 +85,7 @@ h2 {
 /* Darker background on mouse-over */
 .btn:hover,
 .btn a:hover {
-	background-color: #BA7682;
+	background-color: rgba(129, 101, 80, .8);
 	color: #fff;
 }
 
