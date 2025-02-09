@@ -46,8 +46,9 @@ footer {
 }
 
 .pink-link {
-	color: #CC8794; /* rose pink */
+	color: #816550; /* brown TODO: update class name */
 	text-decoration: none;
+	font-weight: 700;
 }
 
 .cs a {
@@ -75,7 +76,7 @@ h2 {
 
 /* Buttons styling */
 .btn {
-	background-color: #CC8794; /* rose pink */
+	background-color: #816550; /* brown */
 	border: none;
 	padding: 12px 18px;
 	cursor: pointer;
