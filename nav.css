@@ -20,10 +20,45 @@
     font-weight: bold;
 }
 
+/* Nav styling */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.nav-logo:hover {
+    color: black;
+}
+.nav-link {
+    color: black;
+    margin: 0 0.5rem;
+}
+
+.nav-link:hover {
+    color: #666;
+}
+
 /* Nav links styling */
 .navbar a,
 .navbar a:link,
 .navbar a:visited {
 	text-decoration: none;
     color: #000; /* Maintain font color after visit */
+}
+
+/* Add padding to body to prevent content from hiding under fixed navbar */
+body {
+    padding-top: 6rem;
+}
+
+@media (max-width: 768px) {
+    .navbar-nav {
+        padding-top: 1rem;
+    }
+    
+    .nav-link {
+        padding: 0.5rem 0;
+    }
 }
