@@ -70,10 +70,6 @@ h2 {
 	margin-bottom: 10px;
 }
 
-.hero p {
-	font-size: 1.2em;
-}
-
 /* Buttons styling */
 .btn {
 	background-color: #816550; /* brown */
@@ -95,9 +91,11 @@ h2 {
 
 /* Index: Intro Section */
 .hero {
-	max-width: 38em;
+	max-width: 60em;
 }
-
+.hero p {
+	font-size: 1.8em;
+}
 
 /* Work / Portfolio Grid Section */
 /* ID for smooth scrolling */

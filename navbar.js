@@ -8,7 +8,9 @@ class NavBar extends HTMLElement {
         this.innerHTML = `
             <header class="navbar navbar-expand-md fixed-top p-3">
                 <div class="container-fluid">
-                    <a class="nav-logo" href="/index.html">NAYEON KIM</a>
+					<div class="nav-logo">	
+						<img src="/media/favicon.png">
+					</div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border-style: none;">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -26,3 +28,6 @@ class NavBar extends HTMLElement {
 }
 
 customElements.define('nav-bar', NavBar);
+
+// removed:
+// <a class="nav-logo" href="/index.html">NAYEON KIM</a>
