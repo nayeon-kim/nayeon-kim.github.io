@@ -7,7 +7,7 @@ class NavBar extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
             <header class="navbar navbar-expand-md fixed-top p-3">
-                <div class="container-fluid">
+                <div class="container-fluid container">
 					<div class="nav-logo">	
 						<img src="/media/favicon.png">
 					</div>
