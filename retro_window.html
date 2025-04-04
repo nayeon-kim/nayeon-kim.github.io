@@ -90,6 +90,11 @@
             min-height: 150px;
         }
         
+        /* Style for windows that have been moved/resized */
+        .window.detached {
+            position: absolute;
+        }
+        
         .resize-handle {
             position: absolute;
             width: 10px;
@@ -663,6 +668,40 @@
             });
         });
         
+                    // Function to detach all windows from grid
+                    function detachAllWindows() {
+                        const mainContent = document.querySelector('.main-content');
+                        const mainRect = mainContent.getBoundingClientRect();
+                        const windows = Array.from(document.querySelectorAll('.window'));
+
+                        // First pass: get all positions before making any changes
+                        const positions = windows.map(window => {
+                            const rect = window.getBoundingClientRect();
+                            return {
+                                window: window,
+                                left: rect.left,
+                                top: rect.top,
+                                width: rect.width,
+                                height: rect.height
+                            };
+                        });
+
+                        // Second pass: apply positions
+                        positions.forEach(pos => {
+                            if (!pos.window.classList.contains('detached')) {
+                                pos.window.classList.add('detached');
+                                pos.window.style.position = 'absolute';
+                                pos.window.style.left = pos.left + 'px';
+                                pos.window.style.top = pos.top + 'px';
+                                pos.window.style.width = pos.width + 'px';
+                                pos.window.style.height = pos.height + 'px';
+                            }
+                        });
+
+                        // Remove grid display from main content to prevent layout shifts
+                        mainContent.style.display = 'block';
+                    }
+                
         // Allow windows to be draggable
         document.querySelectorAll('.window-title').forEach(titleBar => {
             let isDragging = false;
@@ -679,6 +718,9 @@
                     offsetX = e.clientX - rect.left;
                     offsetY = e.clientY - rect.top;
                     
+                    // Detach all windows when starting to drag
+                    detachAllWindows();
+                    
                     // Bring window to front
                     window.style.zIndex = 100;
                 }
@@ -687,9 +729,6 @@
             document.addEventListener('mousemove', function(e) {
                 if (isDragging) {
                     const window = titleBar.closest('.window');
-                    
-                    // Set new position
-                    window.style.position = 'absolute';
                     window.style.left = (e.clientX - offsetX) + 'px';
                     window.style.top = (e.clientY - offsetY) + 'px';
                 }
@@ -704,7 +743,6 @@
                 document.querySelectorAll('.resize-handle').forEach(handle => {
                     let isResizing = false;
                     let startX, startY, startWidth, startHeight, startLeft, startTop;
-                let isInGridLayout = true; // Track if windows are in grid layout
 
                 const handleMouseDown = function (e) {
                     isResizing = true;
@@ -718,19 +756,10 @@
                 startLeft = rect.left;
                 startTop = rect.top;
 
-                // Check if window is in grid layout (not absolutely positioned)
-                isInGridLayout = window.style.position !== 'absolute';
-
-                // If in grid layout, set position to absolute to allow free movement
-                if (isInGridLayout) {
-                    window.style.position = 'absolute';
-                    window.style.left = rect.left + 'px';
-                    window.style.top = rect.top + 'px';
-                    window.style.width = rect.width + 'px';
-                    window.style.height = rect.height + 'px';
+                    // Detach all windows when starting to resize
+                    detachAllWindows();
+                
                     window.style.zIndex = 100;
-                }
-
                 e.preventDefault();
             };
 
@@ -768,14 +797,8 @@
                 }
             };
 
-                const handleMouseUp = function () {
-                if (!isResizing) return;
-                isResizing = false;
-
-                // If window was in grid layout, snap other windows to fill the space
-                if (isInGridLayout) {
-                    snapOtherWindows(handle.closest('.window'));
-                }
+                    const handleMouseUp = function () {
+                    isResizing = false;
             };
 
                 handle.addEventListener('mousedown', handleMouseDown);
@@ -783,54 +806,6 @@
                 document.addEventListener('mouseup', handleMouseUp);
             });
 
-    // Function to snap other windows to fill the space after a window is resized
-    function snapOtherWindows(resizedWindow) {
-        const mainContent = document.querySelector('.main-content');
-        const allWindows = Array.from(document.querySelectorAll('.window'));
-        const resizedWindowIndex = allWindows.indexOf(resizedWindow);
-
-        // Get the main content dimensions
-        const mainContentRect = mainContent.getBoundingClientRect();
-        const mainContentWidth = mainContentRect.width;
-        const mainContentHeight = mainContentRect.height;
-
-        // Define grid parameters
-        const gridGap = 20; // Match the original grid-gap from CSS
-        const windowsPerRow = 2; // Match the original layout
-
-        // Calculate cell dimensions accounting for gaps
-        const availableWidth = mainContentWidth - (gridGap * (windowsPerRow - 1));
-        const cellWidth = availableWidth / windowsPerRow;
-
-        // Calculate the number of rows needed
-        const numRows = Math.ceil(allWindows.length / windowsPerRow);
-        const availableHeight = mainContentHeight - (gridGap * (numRows - 1));
-        const cellHeight = availableHeight / numRows;
-
-        // Position each window in the grid
-        let currentIndex = 0;
-        allWindows.forEach((window, index) => {
-            if (window !== resizedWindow) {
-                // Adjust index to account for the resized window
-                if (index > resizedWindowIndex) {
-                    currentIndex = index - 1;
-                } else {
-                    currentIndex = index;
-                }
-
-                const row = Math.floor(currentIndex / windowsPerRow);
-                const col = currentIndex % windowsPerRow;
-
-                window.style.position = 'absolute';
-                window.style.left = (mainContentRect.left + col * (cellWidth + gridGap)) + 'px';
-                window.style.top = (mainContentRect.top + row * (cellHeight + gridGap)) + 'px';
-                window.style.width = cellWidth + 'px';
-                window.style.height = cellHeight + 'px';
-                window.style.zIndex = 10;
-            }
-        });
-    }
-            
         // Update the time
         function updateTime() {
             const now = new Date();
