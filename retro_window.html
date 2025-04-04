@@ -678,6 +678,12 @@
                 setTimeout(() => {
                     window.classList.remove('restore-animation');
                     windowData.minimized = false;
+
+                    // Remove the taskbar button
+                    if (windowData.taskbarButton) {
+                        windowData.taskbarButton.remove();
+                        delete windows[windowId];
+                    }
                 }, 300);
             }
         }
