@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>heartsl0b - Windows 98 Style Blog</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+            background-color: #008080; /* Windows 98 teal background */
+            color: #000;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            grid-gap: 10px;
+            padding: 10px;
+            padding-bottom: 40px; /* Space for taskbar */
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+            padding-right: 20px;
+        }
+        
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 5px;
+            background-color: #c0c7c8;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-label {
+            color: white;
+            font-size: 12px;
+        }
+        
+        .window {
+            background-color: #c0c7c8;
+            border-top: 1px solid #dfdfdf;
+            border-left: 1px solid #dfdfdf;
+            border-right: 2px solid #000;
+            border-bottom: 2px solid #000;
+            box-shadow: 1px 1px 0 0 #000;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .minimized {
+            transform: scale(0.1);
+            opacity: 0;
+            position: fixed;
+            bottom: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .window-title {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            font-weight: bold;
+            padding: 3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            cursor: move;
+        }
+        
+        .window-title-text {
+            margin-left: 5px;
+        }
+        
+        .window-buttons {
+            display: flex;
+        }
+        
+        .window-button {
+            width: 14px;
+            height: 14px;
+            background-color: #c0c7c8;
+            border-top: 1px solid #fff;
+            border-left: 1px solid #fff;
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+            margin-left: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        
+        .post-info {
+            background-color: #c0c7c8;
+            padding: 5px;
+            font-size: 12px;
+            border-bottom: 1px solid #7f7f7f;
+        }
+        
+        .post-content {
+            background-color: #ffffff;
+            padding: 5px;
+            overflow: auto;
+            max-height: 400px;
+        }
+        
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .post-content p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 32px;
+            background-color: #c0c7c8;
+            border-top: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            z-index: 100;
+        }
+        
+        .start-button {
+            background: linear-gradient(to bottom, #fff, #dadada);
+            border-top: 1px solid #fff;
+            border-left: 1px solid #fff;
+            border-right: 2px solid #000;
+            border-bottom: 2px solid #000;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .start-logo {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+        }
+        
+        .time {
+            background-color: #c0c7c8;
+            border-top: 1px solid #808080;
+            border-left: 1px solid #808080;
+            border-right: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            padding: 2px 5px;
+            font-size: 11px;
+        }
+        
+        .tumblr-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #001935;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .follow-button {
+            position: fixed;
+            top: 20px;
+            right: 100px;
+            background-color: transparent;
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .post-caption {
+            text-align: center;
+            font-size: 11px;
+            padding: 5px;
+            background-color: #fff;
+        }
+        
+        /* Windows Start Menu */
+        .start-menu {
+            position: fixed;
+            bottom: 32px;
+            left: 10px;
+            width: 180px;
+            background-color: #c0c7c8;
+            border-top: 1px solid #fff;
+            border-left: 1px solid #fff;
+            border-right: 2px solid #000;
+            border-bottom: 2px solid #000;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            background-color: #000080;
+            color: white;
+        }
+        
+        .menu-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+            background-color: #c0c7c8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .menu-divider {
+            height: 1px;
+            background-color: #7f7f7f;
+            margin: 5px 0;
+        }
+        
+        .post-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 5px;
+            background-color: #fff;
+            font-size: 11px;
+        }
+        
+        .post-links a {
+            text-decoration: none;
+            color: #000;
+        }
+        
+        .star {
+            display: inline-block;
+            margin: 0 2px;
+        }
+        
+        /* Taskbar window buttons */
+        .taskbar-windows {
+            display: flex;
+            flex: 1;
+            margin: 0 10px;
+            overflow-x: hidden;
+        }
+        
+        .taskbar-window {
+            background: linear-gradient(to bottom, #fff, #dadada);
+            border-top: 1px solid #fff;
+            border-left: 1px solid #fff;
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            font-size: 11px;
+            margin-right: 3px;
+            min-width: 120px;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+        
+        .taskbar-window.active {
+            background: linear-gradient(to bottom, #dadada, #fff);
+        }
+        
+        /* Animation for minimizing */
+        @keyframes minimizeWindow {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.1);
+                opacity: 0;
+                bottom: 0;
+            }
+        }
+        
+        @keyframes restoreWindow {
+            0% {
+                transform: scale(0.1);
+                opacity: 0;
+                bottom: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .minimize-animation {
+            animation: minimizeWindow 0.3s forwards;
+        }
+        
+        .restore-animation {
+            animation: restoreWindow 0.3s forwards;
+        }
+    </style>
+</head>
+<body>
+    <a href="#" class="follow-button">Follow heartsl0b</a>
+    <a href="#" class="tumblr-button">tumblr</a>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="icon-container">
+                <div class="icon">🏠</div>
+                <div class="icon-label">home</div>
+            </div>
+            
+            <div class="icon-container">
+                <div class="icon">🌐</div>
+                <div class="icon-label">website</div>
+            </div>
+            
+            <div class="icon-container">
+                <div class="icon">📷</div>
+                <div class="icon-label">instagram</div>
+            </div>
+            
+            <div class="icon-container">
+                <div class="icon">📱</div>
+                <div class="icon-label">tiktok</div>
+            </div>
+            
+            <div class="icon-container">
+                <div class="icon">📁</div>
+                <div class="icon-label">twitter</div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Post 1 -->
+            <div class="window" id="window1">
+                <div class="window-title">
+                    <div class="window-title-text">Post - Notepad</div>
+                    <div class="window-buttons">
+                        <div class="window-button minimize-btn" data-window="window1" data-title="Welcome to Heart Slob">_</div>
+                        <div class="window-button">□</div>
+                        <div class="window-button">×</div>
+                    </div>
+                </div>
+                <div class="post-info">Posted 3 years ago with 1030 notes</div>
+                <div class="post-content">
+                    <img src="/api/placeholder/400/320" alt="Welcome to Heart Slob" />
+                    <div class="post-links">
+                        <span class="star">★</span> site <span class="star">★</span> 
+                        instagram <span class="star">★</span> 
+                        tiktok <span class="star">★</span> 
+                        twitter <span class="star">★</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post 2 -->
+            <div class="window" id="window2">
+                <div class="window-title">
+                    <div class="window-title-text">Post - Notepad</div>
+                    <div class="window-buttons">
+                        <div class="window-button minimize-btn" data-window="window2" data-title="Beaverton Fashion Cleaners">_</div>
+                        <div class="window-button">□</div>
+                        <div class="window-button">×</div>
+                    </div>
+                </div>
+                <div class="post-info">Posted 1 day ago with 1161 notes</div>
+                <div class="post-content">
+                    <img src="/api/placeholder/400/320" alt="Beaverton Fashion Cleaners" />
+                    <div class="post-caption">beaverton fashion cleaners</div>
+                </div>
+            </div>
+            
+            <!-- Post 3 -->
+            <div class="window" id="window3">
+                <div class="window-title">
+                    <div class="window-title-text">Post - Notepad</div>
+                    <div class="window-buttons">
+                        <div class="window-button minimize-btn" data-window="window3" data-title="Red Store Interior">_</div>
+                        <div class="window-button">□</div>
+                        <div class="window-button">×</div>
+                    </div>
+                </div>
+                <div class="post-info">Posted 1 week ago with 5944 notes</div>
+                <div class="post-content">
+                    <img src="/api/placeholder/400/320" alt="Red Store Interior" />
+                </div>
+            </div>
+            
+            <!-- Post 4 -->
+            <div class="window" id="window4">
+                <div class="window-title">
+                    <div class="window-title-text">Post - Notepad</div>
+                    <div class="window-buttons">
+                        <div class="window-button minimize-btn" data-window="window4" data-title="Pink Wall with Green Tiles">_</div>
+                        <div class="window-button">□</div>
+                        <div class="window-button">×</div>
+                    </div>
+                </div>
+                <div class="post-info">Posted 4 weeks ago with 4094 notes</div>
+                <div class="post-content">
+                    <img src="/api/placeholder/400/320" alt="Pink Wall with Green Tiles" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Start Menu (hidden by default) -->
+    <div class="start-menu" id="startMenu">
+        <div class="menu-item">
+            <div class="menu-icon">📝</div>
+            <div>Windows Update</div>
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-item">
+            <div class="menu-icon">💾</div>
+            <div>Programs</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">⭐</div>
+            <div>Favorites</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">📄</div>
+            <div>Documents</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">⚙️</div>
+            <div>Settings</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">🔍</div>
+            <div>Find</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">❓</div>
+            <div>Help</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">▶️</div>
+            <div>Run...</div>
+        </div>
+        <div class="menu-divider"></div>
+        <div class="menu-item">
+            <div class="menu-icon">🔒</div>
+            <div>Log Off...</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-icon">⏻</div>
+            <div>Shut Down...</div>
+        </div>
+    </div>
+    
+    <!-- Windows 98 Taskbar -->
+    <div class="footer">
+        <div class="start-button" id="startButton">
+            <div class="start-logo">🪟</div>
+            Start
+        </div>
+        <div class="taskbar-windows" id="taskbarWindows">
+            <!-- Taskbar window buttons will be dynamically added here -->
+        </div>
+        <div class="time">07:59 PM</div>
+    </div>
+    
+    <script>
+        // Simple script to toggle the start menu
+        document.getElementById('startButton').addEventListener('click', function() {
+            const startMenu = document.getElementById('startMenu');
+            if (startMenu.style.display === 'block') {
+                startMenu.style.display = 'none';
+            } else {
+                startMenu.style.display = 'block';
+            }
+        });
+        
+        // Hide start menu when clicking elsewhere
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('#startMenu') && !event.target.closest('#startButton')) {
+                document.getElementById('startMenu').style.display = 'none';
+            }
+        });
+        
+        // Initialize the windows
+        const windows = {};
+        const taskbarWindows = document.getElementById('taskbarWindows');
+        
+        // Function to minimize a window
+        function minimizeWindow(windowId, windowTitle) {
+            const window = document.getElementById(windowId);
+            
+            // Create a taskbar button if it doesn't exist
+            if (!windows[windowId]) {
+                const taskbarButton = document.createElement('div');
+                taskbarButton.className = 'taskbar-window';
+                taskbarButton.textContent = windowTitle || 'Post - Notepad';
+                taskbarButton.dataset.window = windowId;
+                taskbarWindows.appendChild(taskbarButton);
+                
+                // Add click event to restore window
+                taskbarButton.addEventListener('click', function() {
+                    restoreWindow(windowId);
+                });
+                
+                windows[windowId] = {
+                    window: window,
+                    taskbarButton: taskbarButton,
+                    minimized: false
+                };
+            }
+            
+            // Add animation class and set minimized state
+            window.classList.add('minimize-animation');
+            
+            // After animation completes, add minimized class
+            setTimeout(() => {
+                window.classList.remove('minimize-animation');
+                window.classList.add('minimized');
+                windows[windowId].minimized = true;
+            }, 300);
+        }
+        
+        // Function to restore a window
+        function restoreWindow(windowId) {
+            const windowData = windows[windowId];
+            if (windowData && windowData.minimized) {
+                const window = windowData.window;
+                
+                // Remove minimized class and add restore animation
+                window.classList.remove('minimized');
+                window.classList.add('restore-animation');
+                
+                // After animation completes, remove restore animation class
+                setTimeout(() => {
+                    window.classList.remove('restore-animation');
+                    windowData.minimized = false;
+                }, 300);
+            }
+        }
+        
+        // Add event listeners to minimize buttons
+        document.querySelectorAll('.minimize-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const windowId = this.dataset.window;
+                const windowTitle = this.dataset.title;
+                minimizeWindow(windowId, windowTitle);
+            });
+        });
+        
+        // Allow windows to be draggable
+        document.querySelectorAll('.window-title').forEach(titleBar => {
+            let isDragging = false;
+            let offsetX, offsetY;
+            
+            titleBar.addEventListener('mousedown', function(e) {
+                // Only handle drag if not clicking buttons
+                if (!e.target.classList.contains('window-button')) {
+                    isDragging = true;
+                    const window = this.closest('.window');
+                    
+                    // Calculate the offset
+                    const rect = window.getBoundingClientRect();
+                    offsetX = e.clientX - rect.left;
+                    offsetY = e.clientY - rect.top;
+                    
+                    // Bring window to front
+                    window.style.zIndex = 100;
+                }
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    const window = titleBar.closest('.window');
+                    
+                    // Set new position
+                    window.style.position = 'absolute';
+                    window.style.left = (e.clientX - offsetX) + 'px';
+                    window.style.top = (e.clientY - offsetY) + 'px';
+                }
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+        });
+        
+        // Update the time
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; // Convert 0 to 12
+            
+            document.querySelector('.time').textContent = `${hours}:${minutes} ${ampm}`;
+        }
+        
+        // Update time initially and every minute
+        updateTime();
+        setInterval(updateTime, 60000);
+    </script>
+</body>
+</html>
