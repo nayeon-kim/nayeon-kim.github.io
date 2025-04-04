@@ -57,6 +57,7 @@
 				justify-content: center;
 				overflow: hidden;
 				position: relative;	
+				text-decoration: none;
 			}
 
 			.icon img {
@@ -71,8 +72,18 @@
 			.icon-label {
 /*				color: white;*/
 				color: #C9007C;
-				font-size: 12px;
+				font-size: 14px;
 			}
+		
+		.icon-label a{
+/*				text-decoration: none;*/
+			}
+		
+		/* Hover effect */
+        a:hover .icon-label {
+			opacity: 50%;
+            transform: translateY(1px); /* Slight upward movement */
+        }
         
         .window {
             background-color: #c0c7c8;
@@ -415,20 +426,32 @@
                 <div class="icon-label">website</div>
             </div>
             
-            <div class="icon-container">
-                <div class="icon">📷</div>
+            <a href="https://www.instagram.com/_yours_gladys/" target="_blank">
+			<div class="icon-container">
+                <div class="icon">
+				<img src="media/icons/pixels/ig-pink.png">	
+				</div>
                 <div class="icon-label">instagram</div>
             </div>
+				</a>
             
-            <div class="icon-container">
-                <div class="icon">📱</div>
-                <div class="icon-label">tiktok</div>
+            <a href="https://www.linkedin.com/in/nayeonk/" target="_blank">
+			<div class="icon-container">
+                <div class="icon">
+				<img src="media/icons/pixels/li-pink.png">	
+				</div>
+                <div class="icon-label">linkedin</div>
             </div>
+				</a>
             
-            <div class="icon-container">
-                <div class="icon">📁</div>
-                <div class="icon-label">twitter</div>
+            <a href = "mailto:hellonaykim@gmail.com?subject=Hello! Let's Chat." target="_blank">
+			<div class="icon-container">
+                <div class="icon">
+				<img src="media/icons/pixels/email-pink.png">	
+				</div>
+                <div class="icon-label">email</div>
             </div>
+				</a>
         </div>
         
         <div class="main-content">
