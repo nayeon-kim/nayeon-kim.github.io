@@ -156,7 +156,8 @@
         }
         
         .window-title {
-            background: linear-gradient(90deg, #000080, #1084d0);
+/*            background: linear-gradient(90deg, #000080, #1084d0); windows styling*/
+			background: #e772b9;
             color: white;
             font-weight: bold;
             padding: 3px 5px;
@@ -178,7 +179,8 @@
         .window-button {
             width: 14px;
             height: 14px;
-            background-color: #c0c7c8;
+/*            background-color: #c0c7c8; windows styling*/
+			background-color:#ffe8f642;
             border-top: 1px solid #fff;
             border-left: 1px solid #fff;
             border-right: 1px solid #000;
@@ -250,6 +252,11 @@
             width: 16px;
             height: 16px;
             margin-right: 5px;
+			display: flex;
+				align-items: center;
+				justify-content: center;
+				overflow: hidden;
+				position: relative;	
         }
         
         .time {
@@ -423,8 +430,10 @@
     </style>
 </head>
 <body>
+<!--
     <a href="#" class="follow-button">Follow heartsl0b</a>
     <a href="#" class="tumblr-button">tumblr</a>
+-->
     
     <div class="container">
         <div class="sidebar">
@@ -605,8 +614,10 @@
     <!-- Windows 98 Taskbar -->
     <div class="footer">
         <div class="start-button" id="startButton">
-            <div class="start-logo">🪟</div>
-            Start
+            <div class="start-logo">
+				🎀
+			</div>
+            Menu
         </div>
         <div class="taskbar-windows" id="taskbarWindows">
             <!-- Taskbar window buttons will be dynamically added here -->
@@ -779,45 +790,58 @@
                                                         },
                                                         {
                                                             id: 'project2',
-                                                            title: 'Photography Portfolio',
+                                                            title: 'Procreate.jpg',
                                                             content: `
-                                    <div style="padding: 15px;">
+                                    <div style="">
                                         <img src="/media/Procreate/Procreate_1.jpg" alt="Illustration">
                                     </div>
                                 `
                                                         },
                                                         {
                                                             id: 'project3',
-                                                            title: 'Design Work',
+                                                            title: 'Procreate.jpg',
                                                             content: `
-                                    <div style="padding: 15px;">
-                                        <h3 style="margin-bottom: 10px;">Design Work</h3>
-                                        <p>Selected graphic design projects including:</p>
-                                        <ul style="margin: 10px 0;">
-                                            <li>Brand identities</li>
-                                            <li>Editorial layouts</li>
-                                            <li>Digital illustrations</li>
-                                        </ul>
-                                        <p>Created using Adobe Creative Suite.</p>
+                                    <div style="">
+                                        <img src="/media/Procreate/Procreate_2.jpg" alt="Illustration">
                                     </div>
                                 `
                                                         },
                                                         {
                                                             id: 'project4',
-                                                            title: 'Experiments',
+                                                            title: 'Procreate.jpg',
                                                             content: `
-                                    <div style="padding: 15px;">
-                                        <h3 style="margin-bottom: 10px;">Experiments</h3>
-                                        <p>A playground for creative coding including:</p>
-                                        <ul style="margin: 10px 0;">
-                                            <li>Interactive animations</li>
-                                            <li>Generative art</li>
-                                            <li>Web experiments</li>
-                                        </ul>
-                                        <p>Built with various web technologies.</p>
+                                    <div style="">
+                                        <img src="/media/Procreate/Procreate_3.jpg" alt="Illustration">
                                     </div>
                                 `
-                                                        }
+                                                        },
+														{
+                                                            id: 'project4',
+                                                            title: 'Procreate.jpg',
+                                                            content: `
+                                    <div style="">
+                                        <img src="/media/Procreate/Procreate_4.jpg" alt="Illustration">
+                                    </div>
+                                `
+                                                        },
+														{
+                                                            id: 'project4',
+                                                            title: 'Procreate.jpg',
+                                                            content: `
+                                    <div style="">
+                                        <img src="/media/Procreate/Procreate_5.jpg" alt="Illustration">
+                                    </div>
+                                `
+                                                        },
+														{
+                                                            id: 'project4',
+                                                            title: 'Procreate.jpg',
+                                                            content: `
+                                    <div style="">
+                                        <img src="/media/Procreate/Procreate_6.jpg" alt="Illustration">
+                                    </div>
+                                `
+                                                        },
                                                     ];
 
                                                     // Check which project windows exist and which need to be created
