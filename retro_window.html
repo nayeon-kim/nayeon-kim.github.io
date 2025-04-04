@@ -731,6 +731,23 @@
                                                         const windowTitle = this.dataset.title;
                                                         minimizeWindow(windowId, windowTitle);
                                                     });
+
+                                                    // Add close button functionality
+                                                    const closeBtn = window.querySelector('.window-buttons .window-button:last-child');
+                                                    closeBtn.addEventListener('click', function () {
+                                                        const windowId = window.id;
+
+                                                        // Remove from taskbar if minimized
+                                                        if (windows[windowId]) {
+                                                            if (windows[windowId].taskbarButton) {
+                                                                windows[windowId].taskbarButton.remove();
+                                                            }
+                                                            delete windows[windowId];
+                                                        }
+
+                                                        // Remove the window from DOM
+                                                        window.remove();
+                                                    });
                                                 }
 
                                                 // Add click handler for Projects menu item
