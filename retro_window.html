@@ -735,106 +735,126 @@
 
                                                 // Add click handler for Projects menu item
                                                 document.querySelector('#projectsMenuItem').addEventListener('click', function () {
-                                                    // Create 4 new windows with different content
-                                                    const projects = [
-                                                        {
-                                                            id: 'project1',
-                                                            title: 'Personal Website',
-                                                            content: `
-                                <div style="padding: 15px;">
-                                    <h3 style="margin-bottom: 10px;">Personal Website</h3>
-                                    <p>A responsive portfolio website built with:</p>
-                                    <ul style="margin: 10px 0;">
-                                        <li>HTML5 & CSS3</li>
-                                        <li>JavaScript</li>
-                                        <li>Windows 98 aesthetic</li>
-                                    </ul>
-                                    <p>Features draggable windows and retro UI elements.</p>
-                                </div>
-                            `
-                                                        },
-                                                        {
-                                                            id: 'project2',
-                                                            title: 'Photography Portfolio',
-                                                            content: `
-                                <div style="padding: 15px;">
-                                    <h3 style="margin-bottom: 10px;">Photography Portfolio</h3>
-                                    <p>A collection of my best photographs featuring:</p>
-                                    <ul style="margin: 10px 0;">
-                                        <li>Street photography</li>
-                                        <li>Urban landscapes</li>
-                                        <li>Architectural details</li>
-                                    </ul>
-                                    <p>Shot on various film and digital cameras.</p>
-                                </div>
-                            `
-                                                        },
-                                                        {
-                                                            id: 'project3',
-                                                            title: 'Design Work',
-                                                            content: `
-                                <div style="padding: 15px;">
-                                    <h3 style="margin-bottom: 10px;">Design Work</h3>
-                                    <p>Selected graphic design projects including:</p>
-                                    <ul style="margin: 10px 0;">
-                                        <li>Brand identities</li>
-                                        <li>Editorial layouts</li>
-                                        <li>Digital illustrations</li>
-                                    </ul>
-                                    <p>Created using Adobe Creative Suite.</p>
-                                </div>
-                            `
-                                                        },
-                                                        {
-                                                            id: 'project4',
-                                                            title: 'Experiments',
-                                                            content: `
-                                <div style="padding: 15px;">
-                                    <h3 style="margin-bottom: 10px;">Experiments</h3>
-                                    <p>A playground for creative coding including:</p>
-                                    <ul style="margin: 10px 0;">
-                                        <li>Interactive animations</li>
-                                        <li>Generative art</li>
-                                        <li>Web experiments</li>
-                                    </ul>
-                                    <p>Built with various web technologies.</p>
-                                </div>
-                            `
-                                                        }
-                                                    ];
-
-                                                    projects.forEach((project, index) => {
-                                                        createWindow(project.id, project.title, project.content);
-
-                                                        // Position the window in a 2x2 grid
-                                                        const window = document.getElementById(project.id);
-                                                        window.style.position = 'absolute';
-
-                                                        // Window dimensions and spacing
-                                                        const windowWidth = 400;  // Slightly wider windows
-                                                        const windowHeight = 300; // Slightly taller windows
-                                                        const horizontalGap = 30;  // Gap between columns
-                                                        const verticalGap = 30;    // Gap between rows
-
-                                                        // Calculate grid position (2x2)
-                                                        const row = Math.floor(index / 2);    // 0 for first row, 1 for second row
-                                                        const col = index % 2;                // 0 for first column, 1 for second column
-
-                                                        // Calculate total grid dimensions
-                                                        const totalWidth = (windowWidth * 2) + horizontalGap;
-
-                                                        // Center horizontally relative to viewport
-                                                        const leftOffset = (document.documentElement.clientWidth - totalWidth) / 2;
-
-                                                        // Position windows
-                                                        const x = leftOffset + (col * (windowWidth + horizontalGap));
-                                                        const y = 400 + (row * (windowHeight + verticalGap)); // Start at 400px from top
-
-                                                        window.style.left = x + 'px';
-                                                        window.style.top = y + 'px';
-                                                        window.style.width = windowWidth + 'px';
-                                                        window.style.height = windowHeight + 'px';
+                                                    // Check if any project windows already exist
+                                                    const existingProjects = ['project1', 'project2', 'project3', 'project4'].some(id => {
+                                                        const window = document.getElementById(id);
+                                                        return window || windows[id];  // Check both DOM and minimized windows
                                                     });
+
+                                                    if (existingProjects) {
+                                                        // If windows exist, restore any that are minimized
+                                                        ['project1', 'project2', 'project3', 'project4'].forEach(id => {
+                                                            if (windows[id] && windows[id].minimized) {
+                                                                restoreWindow(id);
+                                                            }
+                                                            // Bring window to front if it exists
+                                                            const window = document.getElementById(id);
+                                                            if (window) {
+                                                                window.style.zIndex = 100;
+                                                            }
+                                                        });
+                                                    } else {
+                                                        // Create new windows only if they don't exist
+                                                        const projects = [
+                                                            {
+                                                                id: 'project1',
+                                                                title: 'Personal Website',
+                                                                content: `
+                                    <div style="padding: 15px;">
+                                        <h3 style="margin-bottom: 10px;">Personal Website</h3>
+                                        <p>A responsive portfolio website built with:</p>
+                                        <ul style="margin: 10px 0;">
+                                            <li>HTML5 & CSS3</li>
+                                            <li>JavaScript</li>
+                                            <li>Windows 98 aesthetic</li>
+                                        </ul>
+                                        <p>Features draggable windows and retro UI elements.</p>
+                                    </div>
+                                `
+                                                            },
+                                                            {
+                                                                id: 'project2',
+                                                                title: 'Photography Portfolio',
+                                                                content: `
+                                    <div style="padding: 15px;">
+                                        <h3 style="margin-bottom: 10px;">Photography Portfolio</h3>
+                                        <p>A collection of my best photographs featuring:</p>
+                                        <ul style="margin: 10px 0;">
+                                            <li>Street photography</li>
+                                            <li>Urban landscapes</li>
+                                            <li>Architectural details</li>
+                                        </ul>
+                                        <p>Shot on various film and digital cameras.</p>
+                                    </div>
+                                `
+                                                            },
+                                                            {
+                                                                id: 'project3',
+                                                                title: 'Design Work',
+                                                                content: `
+                                    <div style="padding: 15px;">
+                                        <h3 style="margin-bottom: 10px;">Design Work</h3>
+                                        <p>Selected graphic design projects including:</p>
+                                        <ul style="margin: 10px 0;">
+                                            <li>Brand identities</li>
+                                            <li>Editorial layouts</li>
+                                            <li>Digital illustrations</li>
+                                        </ul>
+                                        <p>Created using Adobe Creative Suite.</p>
+                                    </div>
+                                `
+                                                            },
+                                                            {
+                                                                id: 'project4',
+                                                                title: 'Experiments',
+                                                                content: `
+                                    <div style="padding: 15px;">
+                                        <h3 style="margin-bottom: 10px;">Experiments</h3>
+                                        <p>A playground for creative coding including:</p>
+                                        <ul style="margin: 10px 0;">
+                                            <li>Interactive animations</li>
+                                            <li>Generative art</li>
+                                            <li>Web experiments</li>
+                                        </ul>
+                                        <p>Built with various web technologies.</p>
+                                    </div>
+                                `
+                                                            }
+                                                        ];
+
+                                                        projects.forEach((project, index) => {
+                                                            createWindow(project.id, project.title, project.content);
+
+                                                            // Position the window in a 2x2 grid
+                                                            const window = document.getElementById(project.id);
+                                                            window.style.position = 'absolute';
+
+                                                            // Window dimensions and spacing
+                                                            const windowWidth = 400;
+                                                            const windowHeight = 300;
+                                                            const horizontalGap = 30;
+                                                            const verticalGap = 30;
+
+                                                            // Calculate grid position (2x2)
+                                                            const row = Math.floor(index / 2);
+                                                            const col = index % 2;
+
+                                                            // Calculate total grid dimensions
+                                                            const totalWidth = (windowWidth * 2) + horizontalGap;
+
+                                                            // Center horizontally relative to viewport
+                                                            const leftOffset = (document.documentElement.clientWidth - totalWidth) / 2;
+
+                                                            // Position windows
+                                                            const x = leftOffset + (col * (windowWidth + horizontalGap));
+                                                            const y = 400 + (row * (windowHeight + verticalGap));
+
+                                                            window.style.left = x + 'px';
+                                                            window.style.top = y + 'px';
+                                                            window.style.width = windowWidth + 'px';
+                                                            window.style.height = windowHeight + 'px';
+                                                        });
+                                                    }
 
                                                     // Close the start menu after clicking
                                                     document.getElementById('startMenu').style.display = 'none';
