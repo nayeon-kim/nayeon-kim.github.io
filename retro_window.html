@@ -13,7 +13,8 @@
 /*				background-color: #008080;  Windows 98 teal background */
 				color: #000;
 				overflow-x: hidden;
-				cursor: url('/media/icons/pixels/cursor-pink.png'), auto;
+				cursor: url('media/icons/pixels/candy-cursor.gif');
+
 			}
 		/* Custom cursor for all anchor elements on hover */
         a:hover {
@@ -105,6 +106,11 @@
             z-index: 10;
             min-width: 200px;
             min-height: 150px;
+        }
+        
+        /* Style for windows that have been moved/resized */
+        .window.detached {
+            position: absolute;
         }
         
         .resize-handle {
@@ -565,9 +571,9 @@
             <div class="menu-icon">⭐</div>
             <div>Favorites</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" id="projectsMenuItem">
             <div class="menu-icon">📄</div>
-            <div>Documents</div>
+            <div>Projects</div>
         </div>
         <div class="menu-item">
             <div class="menu-icon">⚙️</div>
@@ -609,6 +615,262 @@
     </div>
     
     <script>
+                                                // Function to create a new window
+                                                function createWindow(id, title, content) {
+                                                    const windowHTML = `
+                <div class="window" id="${id}">
+                    <div class="resize-handle nw"></div>
+                    <div class="resize-handle ne"></div>
+                    <div class="resize-handle sw"></div>
+                    <div class="resize-handle se"></div>
+                    <div class="window-title">
+                        <div class="window-title-text">${title}</div>
+                        <div class="window-buttons">
+                            <div class="window-button minimize-btn" data-window="${id}" data-title="${title}">_</div>
+                            <div class="window-button">□</div>
+                            <div class="window-button">×</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        ${content}
+                    </div>
+                </div>
+            `;
+
+                                                    const mainContent = document.querySelector('.main-content');
+                                                    mainContent.insertAdjacentHTML('beforeend', windowHTML);
+
+                                                    // Initialize window functionality
+                                                    const newWindow = document.getElementById(id);
+                                                    initializeWindow(newWindow);
+                                                }
+
+                                                // Function to initialize window functionality (dragging, resizing, etc.)
+                                                function initializeWindow(window) {
+                                                    // Add dragging functionality
+                                                    const titleBar = window.querySelector('.window-title');
+                                                    let isDragging = false;
+                                                    let offsetX, offsetY;
+
+                                                    titleBar.addEventListener('mousedown', function (e) {
+                                                        if (!e.target.classList.contains('window-button')) {
+                                                            isDragging = true;
+                                                            const rect = window.getBoundingClientRect();
+                                                            offsetX = e.clientX - rect.left;
+                                                            offsetY = e.clientY - rect.top;
+                                                            detachAllWindows();
+                                                            window.style.zIndex = 100;
+                                                        }
+                                                    });
+
+                                                    document.addEventListener('mousemove', function (e) {
+                                                        if (isDragging) {
+                                                            window.style.left = (e.clientX - offsetX) + 'px';
+                                                            window.style.top = (e.clientY - offsetY) + 'px';
+                                                        }
+                                                    });
+
+                                                    document.addEventListener('mouseup', function () {
+                                                        isDragging = false;
+                                                    });
+
+                                                    // Add resizing functionality
+                                                    const resizeHandles = window.querySelectorAll('.resize-handle');
+                                                    resizeHandles.forEach(handle => {
+                                                        let isResizing = false;
+                                                        let startX, startY, startWidth, startHeight, startLeft, startTop;
+
+                                                        handle.addEventListener('mousedown', function (e) {
+                                                            isResizing = true;
+                                                            const rect = window.getBoundingClientRect();
+                                                            startX = e.clientX;
+                                                            startY = e.clientY;
+                                                            startWidth = rect.width;
+                                                            startHeight = rect.height;
+                                                            startLeft = rect.left;
+                                                            startTop = rect.top;
+                                                            detachAllWindows();
+                                                            window.style.zIndex = 100;
+                                                            e.preventDefault();
+                                                        });
+
+                                                        document.addEventListener('mousemove', function (e) {
+                                                            if (!isResizing) return;
+                                                            const deltaX = e.clientX - startX;
+                                                            const deltaY = e.clientY - startY;
+
+                                                            if (handle.classList.contains('se')) {
+                                                                window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                                                                window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                                                            } else if (handle.classList.contains('sw')) {
+                                                                const newWidth = Math.max(200, startWidth - deltaX);
+                                                                const newLeft = startLeft + (startWidth - newWidth);
+                                                                window.style.width = newWidth + 'px';
+                                                                window.style.left = newLeft + 'px';
+                                                                window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                                                            } else if (handle.classList.contains('ne')) {
+                                                                window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                                                                const newHeight = Math.max(150, startHeight - deltaY);
+                                                                const newTop = startTop + (startHeight - newHeight);
+                                                                window.style.height = newHeight + 'px';
+                                                                window.style.top = newTop + 'px';
+                                                            } else if (handle.classList.contains('nw')) {
+                                                                const newWidth = Math.max(200, startWidth - deltaX);
+                                                                const newHeight = Math.max(150, startHeight - deltaY);
+                                                                const newLeft = startLeft + (startWidth - newWidth);
+                                                                const newTop = startTop + (startHeight - newHeight);
+                                                                window.style.width = newWidth + 'px';
+                                                                window.style.height = newHeight + 'px';
+                                                                window.style.left = newLeft + 'px';
+                                                                window.style.top = newTop + 'px';
+                                                            }
+                                                        });
+
+                                                        document.addEventListener('mouseup', function () {
+                                                            isResizing = false;
+                                                        });
+                                                    });
+
+                                                    // Add minimize functionality
+                                                    const minimizeBtn = window.querySelector('.minimize-btn');
+                                                    minimizeBtn.addEventListener('click', function () {
+                                                        const windowId = this.dataset.window;
+                                                        const windowTitle = this.dataset.title;
+                                                        minimizeWindow(windowId, windowTitle);
+                                                    });
+
+                                                    // Add close button functionality
+                                                    const closeBtn = window.querySelector('.window-buttons .window-button:last-child');
+                                                    closeBtn.addEventListener('click', function () {
+                                                        const windowId = window.id;
+
+                                                        // Remove from taskbar if minimized
+                                                        if (windows[windowId]) {
+                                                            if (windows[windowId].taskbarButton) {
+                                                                windows[windowId].taskbarButton.remove();
+                                                            }
+                                                            delete windows[windowId];
+                                                        }
+
+                                                        // Remove the window from DOM
+                                                        window.remove();
+                                                    });
+                                                }
+
+                                                // Add click handler for Projects menu item
+                                                document.querySelector('#projectsMenuItem').addEventListener('click', function () {
+                                                    // Define the projects data
+                                                    const projects = [
+                                                        {
+                                                            id: 'project1',
+                                                            title: 'Personal Website',
+                                                            content: `
+                                    <div style="padding: 15px;">
+                                        <h3 style="margin-bottom: 10px;">Personal Website</h3>
+                                        <p>A responsive portfolio website built with:</p>
+                                        <ul style="margin: 10px 0;">
+                                            <li>HTML5 & CSS3</li>
+                                            <li>JavaScript</li>
+                                            <li>Windows 98 aesthetic</li>
+                                        </ul>
+                                        <p>Features draggable windows and retro UI elements.</p>
+                                    </div>
+                                `
+                                                        },
+                                                        {
+                                                            id: 'project2',
+                                                            title: 'Photography Portfolio',
+                                                            content: `
+                                    <div style="padding: 15px;">
+                                        <img src="/media/Procreate/Procreate_1.jpg" alt="Illustration">
+                                    </div>
+                                `
+                                                        },
+                                                        {
+                                                            id: 'project3',
+                                                            title: 'Design Work',
+                                                            content: `
+                                    <div style="padding: 15px;">
+                                        <h3 style="margin-bottom: 10px;">Design Work</h3>
+                                        <p>Selected graphic design projects including:</p>
+                                        <ul style="margin: 10px 0;">
+                                            <li>Brand identities</li>
+                                            <li>Editorial layouts</li>
+                                            <li>Digital illustrations</li>
+                                        </ul>
+                                        <p>Created using Adobe Creative Suite.</p>
+                                    </div>
+                                `
+                                                        },
+                                                        {
+                                                            id: 'project4',
+                                                            title: 'Experiments',
+                                                            content: `
+                                    <div style="padding: 15px;">
+                                        <h3 style="margin-bottom: 10px;">Experiments</h3>
+                                        <p>A playground for creative coding including:</p>
+                                        <ul style="margin: 10px 0;">
+                                            <li>Interactive animations</li>
+                                            <li>Generative art</li>
+                                            <li>Web experiments</li>
+                                        </ul>
+                                        <p>Built with various web technologies.</p>
+                                    </div>
+                                `
+                                                        }
+                                                    ];
+
+                                                    // Check which project windows exist and which need to be created
+                                                    const existingWindows = new Set();
+                                                    projects.forEach(project => {
+                                                        const window = document.getElementById(project.id);
+                                                        if (window) {
+                                                            existingWindows.add(project.id);
+                                                            // Bring existing window to front
+                                                            window.style.zIndex = 100;
+                                                        }
+                                                    });
+
+                                                    // Create missing windows
+                                                    projects.forEach((project, index) => {
+                                                        if (!existingWindows.has(project.id)) {
+                                                            createWindow(project.id, project.title, project.content);
+
+                                                            // Position the window in a 2x2 grid
+                                                            const window = document.getElementById(project.id);
+                                                            window.style.position = 'absolute';
+
+                                                            // Window dimensions and spacing
+                                                            const windowWidth = 400;
+                                                            const windowHeight = 300;
+                                                            const horizontalGap = 30;
+                                                            const verticalGap = 30;
+
+                                                            // Calculate grid position (2x2)
+                                                            const row = Math.floor(index / 2);
+                                                            const col = index % 2;
+
+                                                            // Calculate total grid dimensions
+                                                            const totalWidth = (windowWidth * 2) + horizontalGap;
+
+                                                            // Center horizontally relative to viewport
+                                                            const leftOffset = (document.documentElement.clientWidth - totalWidth) / 2;
+
+                                                            // Position windows
+                                                            const x = leftOffset + (col * (windowWidth + horizontalGap));
+                                                            const y = 400 + (row * (windowHeight + verticalGap));
+
+                                                            window.style.left = x + 'px';
+                                                            window.style.top = y + 'px';
+                                                            window.style.width = windowWidth + 'px';
+                                                            window.style.height = windowHeight + 'px';
+                                                        }
+                                                    });
+
+                                                    // Close the start menu after clicking
+                                                    document.getElementById('startMenu').style.display = 'none';
+                                                });
+
         // Simple script to toggle the start menu
         document.getElementById('startButton').addEventListener('click', function() {
             const startMenu = document.getElementById('startMenu');
@@ -679,6 +941,12 @@
                 setTimeout(() => {
                     window.classList.remove('restore-animation');
                     windowData.minimized = false;
+
+                    // Remove the taskbar button
+                    if (windowData.taskbarButton) {
+                        windowData.taskbarButton.remove();
+                        delete windows[windowId];
+                    }
                 }, 300);
             }
         }
@@ -692,6 +960,40 @@
             });
         });
         
+                    // Function to detach all windows from grid
+                    function detachAllWindows() {
+                        const mainContent = document.querySelector('.main-content');
+                        const mainRect = mainContent.getBoundingClientRect();
+                        const windows = Array.from(document.querySelectorAll('.window'));
+
+                        // First pass: get all positions before making any changes
+                        const positions = windows.map(window => {
+                            const rect = window.getBoundingClientRect();
+                            return {
+                                window: window,
+                                left: rect.left,
+                                top: rect.top,
+                                width: rect.width,
+                                height: rect.height
+                            };
+                        });
+
+                        // Second pass: apply positions
+                        positions.forEach(pos => {
+                            if (!pos.window.classList.contains('detached')) {
+                                pos.window.classList.add('detached');
+                                pos.window.style.position = 'absolute';
+                                pos.window.style.left = pos.left + 'px';
+                                pos.window.style.top = pos.top + 'px';
+                                pos.window.style.width = pos.width + 'px';
+                                pos.window.style.height = pos.height + 'px';
+                            }
+                        });
+
+                        // Remove grid display from main content to prevent layout shifts
+                        mainContent.style.display = 'block';
+                    }
+                
         // Allow windows to be draggable
         document.querySelectorAll('.window-title').forEach(titleBar => {
             let isDragging = false;
@@ -708,6 +1010,9 @@
                     offsetX = e.clientX - rect.left;
                     offsetY = e.clientY - rect.top;
                     
+                    // Detach all windows when starting to drag
+                    detachAllWindows();
+                    
                     // Bring window to front
                     window.style.zIndex = 100;
                 }
@@ -716,9 +1021,6 @@
             document.addEventListener('mousemove', function(e) {
                 if (isDragging) {
                     const window = titleBar.closest('.window');
-                    
-                    // Set new position
-                    window.style.position = 'absolute';
                     window.style.left = (e.clientX - offsetX) + 'px';
                     window.style.top = (e.clientY - offsetY) + 'px';
                 }
@@ -733,7 +1035,6 @@
                 document.querySelectorAll('.resize-handle').forEach(handle => {
                     let isResizing = false;
                     let startX, startY, startWidth, startHeight, startLeft, startTop;
-                let isInGridLayout = true; // Track if windows are in grid layout
 
                 const handleMouseDown = function (e) {
                     isResizing = true;
@@ -747,19 +1048,10 @@
                 startLeft = rect.left;
                 startTop = rect.top;
 
-                // Check if window is in grid layout (not absolutely positioned)
-                isInGridLayout = window.style.position !== 'absolute';
-
-                // If in grid layout, set position to absolute to allow free movement
-                if (isInGridLayout) {
-                    window.style.position = 'absolute';
-                    window.style.left = rect.left + 'px';
-                    window.style.top = rect.top + 'px';
-                    window.style.width = rect.width + 'px';
-                    window.style.height = rect.height + 'px';
+                    // Detach all windows when starting to resize
+                    detachAllWindows();
+                
                     window.style.zIndex = 100;
-                }
-
                 e.preventDefault();
             };
 
@@ -797,14 +1089,8 @@
                 }
             };
 
-                const handleMouseUp = function () {
-                if (!isResizing) return;
-                isResizing = false;
-
-                // If window was in grid layout, snap other windows to fill the space
-                if (isInGridLayout) {
-                    snapOtherWindows(handle.closest('.window'));
-                }
+                    const handleMouseUp = function () {
+                    isResizing = false;
             };
 
                 handle.addEventListener('mousedown', handleMouseDown);
@@ -812,54 +1098,6 @@
                 document.addEventListener('mouseup', handleMouseUp);
             });
 
-    // Function to snap other windows to fill the space after a window is resized
-    function snapOtherWindows(resizedWindow) {
-        const mainContent = document.querySelector('.main-content');
-        const allWindows = Array.from(document.querySelectorAll('.window'));
-        const resizedWindowIndex = allWindows.indexOf(resizedWindow);
-
-        // Get the main content dimensions
-        const mainContentRect = mainContent.getBoundingClientRect();
-        const mainContentWidth = mainContentRect.width;
-        const mainContentHeight = mainContentRect.height;
-
-        // Define grid parameters
-        const gridGap = 20; // Match the original grid-gap from CSS
-        const windowsPerRow = 2; // Match the original layout
-
-        // Calculate cell dimensions accounting for gaps
-        const availableWidth = mainContentWidth - (gridGap * (windowsPerRow - 1));
-        const cellWidth = availableWidth / windowsPerRow;
-
-        // Calculate the number of rows needed
-        const numRows = Math.ceil(allWindows.length / windowsPerRow);
-        const availableHeight = mainContentHeight - (gridGap * (numRows - 1));
-        const cellHeight = availableHeight / numRows;
-
-        // Position each window in the grid
-        let currentIndex = 0;
-        allWindows.forEach((window, index) => {
-            if (window !== resizedWindow) {
-                // Adjust index to account for the resized window
-                if (index > resizedWindowIndex) {
-                    currentIndex = index - 1;
-                } else {
-                    currentIndex = index;
-                }
-
-                const row = Math.floor(currentIndex / windowsPerRow);
-                const col = currentIndex % windowsPerRow;
-
-                window.style.position = 'absolute';
-                window.style.left = (mainContentRect.left + col * (cellWidth + gridGap)) + 'px';
-                window.style.top = (mainContentRect.top + row * (cellHeight + gridGap)) + 'px';
-                window.style.width = cellWidth + 'px';
-                window.style.height = cellHeight + 'px';
-                window.style.zIndex = 10;
-            }
-        });
-    }
-            
         // Update the time
         function updateTime() {
             const now = new Date();
