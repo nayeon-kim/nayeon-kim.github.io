@@ -564,7 +564,7 @@
             <div class="menu-icon">⭐</div>
             <div>Favorites</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" id="projectsMenuItem">
             <div class="menu-icon">📄</div>
             <div>Projects</div>
         </div>
@@ -608,6 +608,238 @@
     </div>
     
     <script>
+                                                // Function to create a new window
+                                                function createWindow(id, title, content) {
+                                                    const windowHTML = `
+                <div class="window" id="${id}">
+                    <div class="resize-handle nw"></div>
+                    <div class="resize-handle ne"></div>
+                    <div class="resize-handle sw"></div>
+                    <div class="resize-handle se"></div>
+                    <div class="window-title">
+                        <div class="window-title-text">${title}</div>
+                        <div class="window-buttons">
+                            <div class="window-button minimize-btn" data-window="${id}" data-title="${title}">_</div>
+                            <div class="window-button">□</div>
+                            <div class="window-button">×</div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        ${content}
+                    </div>
+                </div>
+            `;
+
+                                                    const mainContent = document.querySelector('.main-content');
+                                                    mainContent.insertAdjacentHTML('beforeend', windowHTML);
+
+                                                    // Initialize window functionality
+                                                    const newWindow = document.getElementById(id);
+                                                    initializeWindow(newWindow);
+                                                }
+
+                                                // Function to initialize window functionality (dragging, resizing, etc.)
+                                                function initializeWindow(window) {
+                                                    // Add dragging functionality
+                                                    const titleBar = window.querySelector('.window-title');
+                                                    let isDragging = false;
+                                                    let offsetX, offsetY;
+
+                                                    titleBar.addEventListener('mousedown', function (e) {
+                                                        if (!e.target.classList.contains('window-button')) {
+                                                            isDragging = true;
+                                                            const rect = window.getBoundingClientRect();
+                                                            offsetX = e.clientX - rect.left;
+                                                            offsetY = e.clientY - rect.top;
+                                                            detachAllWindows();
+                                                            window.style.zIndex = 100;
+                                                        }
+                                                    });
+
+                                                    document.addEventListener('mousemove', function (e) {
+                                                        if (isDragging) {
+                                                            window.style.left = (e.clientX - offsetX) + 'px';
+                                                            window.style.top = (e.clientY - offsetY) + 'px';
+                                                        }
+                                                    });
+
+                                                    document.addEventListener('mouseup', function () {
+                                                        isDragging = false;
+                                                    });
+
+                                                    // Add resizing functionality
+                                                    const resizeHandles = window.querySelectorAll('.resize-handle');
+                                                    resizeHandles.forEach(handle => {
+                                                        let isResizing = false;
+                                                        let startX, startY, startWidth, startHeight, startLeft, startTop;
+
+                                                        handle.addEventListener('mousedown', function (e) {
+                                                            isResizing = true;
+                                                            const rect = window.getBoundingClientRect();
+                                                            startX = e.clientX;
+                                                            startY = e.clientY;
+                                                            startWidth = rect.width;
+                                                            startHeight = rect.height;
+                                                            startLeft = rect.left;
+                                                            startTop = rect.top;
+                                                            detachAllWindows();
+                                                            window.style.zIndex = 100;
+                                                            e.preventDefault();
+                                                        });
+
+                                                        document.addEventListener('mousemove', function (e) {
+                                                            if (!isResizing) return;
+                                                            const deltaX = e.clientX - startX;
+                                                            const deltaY = e.clientY - startY;
+
+                                                            if (handle.classList.contains('se')) {
+                                                                window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                                                                window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                                                            } else if (handle.classList.contains('sw')) {
+                                                                const newWidth = Math.max(200, startWidth - deltaX);
+                                                                const newLeft = startLeft + (startWidth - newWidth);
+                                                                window.style.width = newWidth + 'px';
+                                                                window.style.left = newLeft + 'px';
+                                                                window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                                                            } else if (handle.classList.contains('ne')) {
+                                                                window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                                                                const newHeight = Math.max(150, startHeight - deltaY);
+                                                                const newTop = startTop + (startHeight - newHeight);
+                                                                window.style.height = newHeight + 'px';
+                                                                window.style.top = newTop + 'px';
+                                                            } else if (handle.classList.contains('nw')) {
+                                                                const newWidth = Math.max(200, startWidth - deltaX);
+                                                                const newHeight = Math.max(150, startHeight - deltaY);
+                                                                const newLeft = startLeft + (startWidth - newWidth);
+                                                                const newTop = startTop + (startHeight - newHeight);
+                                                                window.style.width = newWidth + 'px';
+                                                                window.style.height = newHeight + 'px';
+                                                                window.style.left = newLeft + 'px';
+                                                                window.style.top = newTop + 'px';
+                                                            }
+                                                        });
+
+                                                        document.addEventListener('mouseup', function () {
+                                                            isResizing = false;
+                                                        });
+                                                    });
+
+                                                    // Add minimize functionality
+                                                    const minimizeBtn = window.querySelector('.minimize-btn');
+                                                    minimizeBtn.addEventListener('click', function () {
+                                                        const windowId = this.dataset.window;
+                                                        const windowTitle = this.dataset.title;
+                                                        minimizeWindow(windowId, windowTitle);
+                                                    });
+                                                }
+
+                                                // Add click handler for Projects menu item
+                                                document.querySelector('#projectsMenuItem').addEventListener('click', function () {
+                                                    // Create 4 new windows with different content
+                                                    const projects = [
+                                                        {
+                                                            id: 'project1',
+                                                            title: 'Personal Website',
+                                                            content: `
+                                <div style="padding: 15px;">
+                                    <h3 style="margin-bottom: 10px;">Personal Website</h3>
+                                    <p>A responsive portfolio website built with:</p>
+                                    <ul style="margin: 10px 0;">
+                                        <li>HTML5 & CSS3</li>
+                                        <li>JavaScript</li>
+                                        <li>Windows 98 aesthetic</li>
+                                    </ul>
+                                    <p>Features draggable windows and retro UI elements.</p>
+                                </div>
+                            `
+                                                        },
+                                                        {
+                                                            id: 'project2',
+                                                            title: 'Photography Portfolio',
+                                                            content: `
+                                <div style="padding: 15px;">
+                                    <h3 style="margin-bottom: 10px;">Photography Portfolio</h3>
+                                    <p>A collection of my best photographs featuring:</p>
+                                    <ul style="margin: 10px 0;">
+                                        <li>Street photography</li>
+                                        <li>Urban landscapes</li>
+                                        <li>Architectural details</li>
+                                    </ul>
+                                    <p>Shot on various film and digital cameras.</p>
+                                </div>
+                            `
+                                                        },
+                                                        {
+                                                            id: 'project3',
+                                                            title: 'Design Work',
+                                                            content: `
+                                <div style="padding: 15px;">
+                                    <h3 style="margin-bottom: 10px;">Design Work</h3>
+                                    <p>Selected graphic design projects including:</p>
+                                    <ul style="margin: 10px 0;">
+                                        <li>Brand identities</li>
+                                        <li>Editorial layouts</li>
+                                        <li>Digital illustrations</li>
+                                    </ul>
+                                    <p>Created using Adobe Creative Suite.</p>
+                                </div>
+                            `
+                                                        },
+                                                        {
+                                                            id: 'project4',
+                                                            title: 'Experiments',
+                                                            content: `
+                                <div style="padding: 15px;">
+                                    <h3 style="margin-bottom: 10px;">Experiments</h3>
+                                    <p>A playground for creative coding including:</p>
+                                    <ul style="margin: 10px 0;">
+                                        <li>Interactive animations</li>
+                                        <li>Generative art</li>
+                                        <li>Web experiments</li>
+                                    </ul>
+                                    <p>Built with various web technologies.</p>
+                                </div>
+                            `
+                                                        }
+                                                    ];
+
+                                                    projects.forEach((project, index) => {
+                                                        createWindow(project.id, project.title, project.content);
+
+                                                        // Position the window in a 2x2 grid
+                                                        const window = document.getElementById(project.id);
+                                                        window.style.position = 'absolute';
+
+                                                        // Window dimensions and spacing
+                                                        const windowWidth = 400;  // Slightly wider windows
+                                                        const windowHeight = 300; // Slightly taller windows
+                                                        const horizontalGap = 30;  // Gap between columns
+                                                        const verticalGap = 30;    // Gap between rows
+
+                                                        // Calculate grid position (2x2)
+                                                        const row = Math.floor(index / 2);    // 0 for first row, 1 for second row
+                                                        const col = index % 2;                // 0 for first column, 1 for second column
+
+                                                        // Calculate total grid dimensions
+                                                        const totalWidth = (windowWidth * 2) + horizontalGap;
+
+                                                        // Center horizontally relative to viewport
+                                                        const leftOffset = (document.documentElement.clientWidth - totalWidth) / 2;
+
+                                                        // Position windows
+                                                        const x = leftOffset + (col * (windowWidth + horizontalGap));
+                                                        const y = 400 + (row * (windowHeight + verticalGap)); // Start at 400px from top
+
+                                                        window.style.left = x + 'px';
+                                                        window.style.top = y + 'px';
+                                                        window.style.width = windowWidth + 'px';
+                                                        window.style.height = windowHeight + 'px';
+                                                    });
+
+                                                    // Close the start menu after clicking
+                                                    document.getElementById('startMenu').style.display = 'none';
+                                                });
+
         // Simple script to toggle the start menu
         document.getElementById('startButton').addEventListener('click', function() {
             const startMenu = document.getElementById('startMenu');
