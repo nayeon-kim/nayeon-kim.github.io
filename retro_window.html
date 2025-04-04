@@ -71,6 +71,41 @@
             transition: all 0.3s ease;
             position: relative;
             z-index: 10;
+            min-width: 200px;
+            min-height: 150px;
+        }
+        
+        .resize-handle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+            border: none;
+            z-index: 11;
+        }
+        
+        .resize-handle.nw {
+            top: 0;
+            left: 0;
+            cursor: nw-resize;
+        }
+        
+        .resize-handle.ne {
+            top: 0;
+            right: 0;
+            cursor: ne-resize;
+        }
+        
+        .resize-handle.sw {
+            bottom: 0;
+            left: 0;
+            cursor: sw-resize;
+        }
+        
+        .resize-handle.se {
+            bottom: 0;
+            right: 0;
+            cursor: se-resize;
         }
         
         .minimized {
@@ -384,6 +419,10 @@
         <div class="main-content">
             <!-- Post 1 -->
             <div class="window" id="window1">
+                <div class="resize-handle nw"></div>
+                <div class="resize-handle ne"></div>
+                <div class="resize-handle sw"></div>
+                <div class="resize-handle se"></div>
                 <div class="window-title">
                     <div class="window-title-text">Post - Notepad</div>
                     <div class="window-buttons">
@@ -406,6 +445,10 @@
             
             <!-- Post 2 -->
             <div class="window" id="window2">
+                <div class="resize-handle nw"></div>
+                <div class="resize-handle ne"></div>
+                <div class="resize-handle sw"></div>
+                <div class="resize-handle se"></div>
                 <div class="window-title">
                     <div class="window-title-text">Post - Notepad</div>
                     <div class="window-buttons">
@@ -423,6 +466,10 @@
             
             <!-- Post 3 -->
             <div class="window" id="window3">
+                <div class="resize-handle nw"></div>
+                <div class="resize-handle ne"></div>
+                <div class="resize-handle sw"></div>
+                <div class="resize-handle se"></div>
                 <div class="window-title">
                     <div class="window-title-text">Post - Notepad</div>
                     <div class="window-buttons">
@@ -439,6 +486,10 @@
             
             <!-- Post 4 -->
             <div class="window" id="window4">
+                <div class="resize-handle nw"></div>
+                <div class="resize-handle ne"></div>
+                <div class="resize-handle sw"></div>
+                <div class="resize-handle se"></div>
                 <div class="window-title">
                     <div class="window-title-text">Post - Notepad</div>
                     <div class="window-buttons">
@@ -634,6 +685,72 @@
             });
         });
         
+                // Handle window resizing
+                document.querySelectorAll('.resize-handle').forEach(handle => {
+                    let isResizing = false;
+                    let startX, startY, startWidth, startHeight, startLeft, startTop;
+
+                    const handleMouseDown = function (e) {
+                        isResizing = true;
+                        const window = this.closest('.window');
+                        const rect = window.getBoundingClientRect();
+
+                        startX = e.clientX;
+                        startY = e.clientY;
+                        startWidth = rect.width;
+                        startHeight = rect.height;
+                        startLeft = rect.left;
+                        startTop = rect.top;
+
+                        // Bring window to front
+                        window.style.zIndex = 100;
+
+                        e.preventDefault();
+                    };
+
+                    const handleMouseMove = function (e) {
+                        if (!isResizing) return;
+
+                        const window = handle.closest('.window');
+                        const deltaX = e.clientX - startX;
+                        const deltaY = e.clientY - startY;
+
+                        if (handle.classList.contains('se')) {
+                            window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                            window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                        } else if (handle.classList.contains('sw')) {
+                            const newWidth = Math.max(200, startWidth - deltaX);
+                            const newLeft = startLeft + (startWidth - newWidth);
+                            window.style.width = newWidth + 'px';
+                            window.style.left = newLeft + 'px';
+                            window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                        } else if (handle.classList.contains('ne')) {
+                            window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                            const newHeight = Math.max(150, startHeight - deltaY);
+                            const newTop = startTop + (startHeight - newHeight);
+                            window.style.height = newHeight + 'px';
+                            window.style.top = newTop + 'px';
+                        } else if (handle.classList.contains('nw')) {
+                            const newWidth = Math.max(200, startWidth - deltaX);
+                            const newHeight = Math.max(150, startHeight - deltaY);
+                            const newLeft = startLeft + (startWidth - newWidth);
+                            const newTop = startTop + (startHeight - newHeight);
+                            window.style.width = newWidth + 'px';
+                            window.style.height = newHeight + 'px';
+                            window.style.left = newLeft + 'px';
+                            window.style.top = newTop + 'px';
+                        }
+                    };
+
+                    const handleMouseUp = function () {
+                        isResizing = false;
+                    };
+
+                    handle.addEventListener('mousedown', handleMouseDown);
+                    document.addEventListener('mousemove', handleMouseMove);
+                    document.addEventListener('mouseup', handleMouseUp);
+                });
+            
         // Update the time
         function updateTime() {
             const now = new Date();
