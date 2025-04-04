@@ -13,7 +13,12 @@
 /*				background-color: #008080;  Windows 98 teal background */
 				color: #000;
 				overflow-x: hidden;
+				cursor: url('/media/icons/pixels/cursor-pink.png'), auto;
 			}
+		/* Custom cursor for all anchor elements on hover */
+        a:hover {
+            cursor: url('cursor-hover.png'), pointer;
+        }
 
 			.container {
 				display: grid;
@@ -73,15 +78,16 @@
 /*				color: white;*/
 				color: #C9007C;
 				font-size: 14px;
-			}
-		
-		.icon-label a{
 /*				text-decoration: none;*/
 			}
 		
+		a {
+				text-decoration: none;
+			}
+		
 		/* Hover effect */
-        a:hover .icon-label {
-			opacity: 50%;
+        a:hover .icon-container {
+			opacity: 70%;
             transform: translateY(1px); /* Slight upward movement */
         }
         
