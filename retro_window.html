@@ -689,67 +689,132 @@
                 document.querySelectorAll('.resize-handle').forEach(handle => {
                     let isResizing = false;
                     let startX, startY, startWidth, startHeight, startLeft, startTop;
+                let isInGridLayout = true; // Track if windows are in grid layout
 
-                    const handleMouseDown = function (e) {
-                        isResizing = true;
-                        const window = this.closest('.window');
-                        const rect = window.getBoundingClientRect();
+                const handleMouseDown = function (e) {
+                    isResizing = true;
+                    const window = this.closest('.window');
+                    const rect = window.getBoundingClientRect();
 
-                        startX = e.clientX;
-                        startY = e.clientY;
-                        startWidth = rect.width;
-                        startHeight = rect.height;
-                        startLeft = rect.left;
-                        startTop = rect.top;
+                startX = e.clientX;
+                startY = e.clientY;
+                startWidth = rect.width;
+                startHeight = rect.height;
+                startLeft = rect.left;
+                startTop = rect.top;
 
-                        // Bring window to front
-                        window.style.zIndex = 100;
+                // Check if window is in grid layout (not absolutely positioned)
+                isInGridLayout = window.style.position !== 'absolute';
 
-                        e.preventDefault();
-                    };
+                // If in grid layout, set position to absolute to allow free movement
+                if (isInGridLayout) {
+                    window.style.position = 'absolute';
+                    window.style.left = rect.left + 'px';
+                    window.style.top = rect.top + 'px';
+                    window.style.width = rect.width + 'px';
+                    window.style.height = rect.height + 'px';
+                    window.style.zIndex = 100;
+                }
 
-                    const handleMouseMove = function (e) {
-                        if (!isResizing) return;
+                e.preventDefault();
+            };
 
-                        const window = handle.closest('.window');
-                        const deltaX = e.clientX - startX;
-                        const deltaY = e.clientY - startY;
+                const handleMouseMove = function (e) {
+                    if (!isResizing) return;
 
-                        if (handle.classList.contains('se')) {
-                            window.style.width = Math.max(200, startWidth + deltaX) + 'px';
-                            window.style.height = Math.max(150, startHeight + deltaY) + 'px';
-                        } else if (handle.classList.contains('sw')) {
-                            const newWidth = Math.max(200, startWidth - deltaX);
-                            const newLeft = startLeft + (startWidth - newWidth);
-                            window.style.width = newWidth + 'px';
-                            window.style.left = newLeft + 'px';
-                            window.style.height = Math.max(150, startHeight + deltaY) + 'px';
-                        } else if (handle.classList.contains('ne')) {
-                            window.style.width = Math.max(200, startWidth + deltaX) + 'px';
-                            const newHeight = Math.max(150, startHeight - deltaY);
-                            const newTop = startTop + (startHeight - newHeight);
-                            window.style.height = newHeight + 'px';
-                            window.style.top = newTop + 'px';
-                        } else if (handle.classList.contains('nw')) {
-                            const newWidth = Math.max(200, startWidth - deltaX);
-                            const newHeight = Math.max(150, startHeight - deltaY);
-                            const newLeft = startLeft + (startWidth - newWidth);
-                            const newTop = startTop + (startHeight - newHeight);
-                            window.style.width = newWidth + 'px';
-                            window.style.height = newHeight + 'px';
-                            window.style.left = newLeft + 'px';
-                            window.style.top = newTop + 'px';
-                        }
-                    };
+                const window = handle.closest('.window');
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
 
-                    const handleMouseUp = function () {
-                        isResizing = false;
-                    };
+                if (handle.classList.contains('se')) {
+                    window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                    window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                } else if (handle.classList.contains('sw')) {
+                    const newWidth = Math.max(200, startWidth - deltaX);
+                    const newLeft = startLeft + (startWidth - newWidth);
+                    window.style.width = newWidth + 'px';
+                    window.style.left = newLeft + 'px';
+                    window.style.height = Math.max(150, startHeight + deltaY) + 'px';
+                } else if (handle.classList.contains('ne')) {
+                    window.style.width = Math.max(200, startWidth + deltaX) + 'px';
+                    const newHeight = Math.max(150, startHeight - deltaY);
+                    const newTop = startTop + (startHeight - newHeight);
+                    window.style.height = newHeight + 'px';
+                    window.style.top = newTop + 'px';
+                } else if (handle.classList.contains('nw')) {
+                    const newWidth = Math.max(200, startWidth - deltaX);
+                    const newHeight = Math.max(150, startHeight - deltaY);
+                    const newLeft = startLeft + (startWidth - newWidth);
+                    const newTop = startTop + (startHeight - newHeight);
+                    window.style.width = newWidth + 'px';
+                    window.style.height = newHeight + 'px';
+                    window.style.left = newLeft + 'px';
+                    window.style.top = newTop + 'px';
+                }
+            };
 
-                    handle.addEventListener('mousedown', handleMouseDown);
-                    document.addEventListener('mousemove', handleMouseMove);
-                    document.addEventListener('mouseup', handleMouseUp);
-                });
+                const handleMouseUp = function () {
+                if (!isResizing) return;
+                isResizing = false;
+
+                // If window was in grid layout, snap other windows to fill the space
+                if (isInGridLayout) {
+                    snapOtherWindows(handle.closest('.window'));
+                }
+            };
+
+                handle.addEventListener('mousedown', handleMouseDown);
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+            });
+
+    // Function to snap other windows to fill the space after a window is resized
+    function snapOtherWindows(resizedWindow) {
+        const mainContent = document.querySelector('.main-content');
+        const allWindows = Array.from(document.querySelectorAll('.window'));
+        const resizedWindowIndex = allWindows.indexOf(resizedWindow);
+
+        // Get the main content dimensions
+        const mainContentRect = mainContent.getBoundingClientRect();
+        const mainContentWidth = mainContentRect.width;
+        const mainContentHeight = mainContentRect.height;
+
+        // Define grid parameters
+        const gridGap = 20; // Match the original grid-gap from CSS
+        const windowsPerRow = 2; // Match the original layout
+
+        // Calculate cell dimensions accounting for gaps
+        const availableWidth = mainContentWidth - (gridGap * (windowsPerRow - 1));
+        const cellWidth = availableWidth / windowsPerRow;
+
+        // Calculate the number of rows needed
+        const numRows = Math.ceil(allWindows.length / windowsPerRow);
+        const availableHeight = mainContentHeight - (gridGap * (numRows - 1));
+        const cellHeight = availableHeight / numRows;
+
+        // Position each window in the grid
+        let currentIndex = 0;
+        allWindows.forEach((window, index) => {
+            if (window !== resizedWindow) {
+                // Adjust index to account for the resized window
+                if (index > resizedWindowIndex) {
+                    currentIndex = index - 1;
+                } else {
+                    currentIndex = index;
+                }
+
+                const row = Math.floor(currentIndex / windowsPerRow);
+                const col = currentIndex % windowsPerRow;
+
+                window.style.position = 'absolute';
+                window.style.left = (mainContentRect.left + col * (cellWidth + gridGap)) + 'px';
+                window.style.top = (mainContentRect.top + row * (cellHeight + gridGap)) + 'px';
+                window.style.width = cellWidth + 'px';
+                window.style.height = cellHeight + 'px';
+                window.style.zIndex = 10;
+            }
+        });
+    }
             
         // Update the time
         function updateTime() {
