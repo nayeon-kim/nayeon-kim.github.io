@@ -752,31 +752,12 @@
 
                                                 // Add click handler for Projects menu item
                                                 document.querySelector('#projectsMenuItem').addEventListener('click', function () {
-                                                    // Check if any project windows already exist
-                                                    const existingProjects = ['project1', 'project2', 'project3', 'project4'].some(id => {
-                                                        const window = document.getElementById(id);
-                                                        return window || windows[id];  // Check both DOM and minimized windows
-                                                    });
-
-                                                    if (existingProjects) {
-                                                        // If windows exist, restore any that are minimized
-                                                        ['project1', 'project2', 'project3', 'project4'].forEach(id => {
-                                                            if (windows[id] && windows[id].minimized) {
-                                                                restoreWindow(id);
-                                                            }
-                                                            // Bring window to front if it exists
-                                                            const window = document.getElementById(id);
-                                                            if (window) {
-                                                                window.style.zIndex = 100;
-                                                            }
-                                                        });
-                                                    } else {
-                                                        // Create new windows only if they don't exist
-                                                        const projects = [
-                                                            {
-                                                                id: 'project1',
-                                                                title: 'Personal Website',
-                                                                content: `
+                                                    // Define the projects data
+                                                    const projects = [
+                                                        {
+                                                            id: 'project1',
+                                                            title: 'Personal Website',
+                                                            content: `
                                     <div style="padding: 15px;">
                                         <h3 style="margin-bottom: 10px;">Personal Website</h3>
                                         <p>A responsive portfolio website built with:</p>
@@ -788,11 +769,11 @@
                                         <p>Features draggable windows and retro UI elements.</p>
                                     </div>
                                 `
-                                                            },
-                                                            {
-                                                                id: 'project2',
-                                                                title: 'Photography Portfolio',
-                                                                content: `
+                                                        },
+                                                        {
+                                                            id: 'project2',
+                                                            title: 'Photography Portfolio',
+                                                            content: `
                                     <div style="padding: 15px;">
                                         <h3 style="margin-bottom: 10px;">Photography Portfolio</h3>
                                         <p>A collection of my best photographs featuring:</p>
@@ -804,11 +785,11 @@
                                         <p>Shot on various film and digital cameras.</p>
                                     </div>
                                 `
-                                                            },
-                                                            {
-                                                                id: 'project3',
-                                                                title: 'Design Work',
-                                                                content: `
+                                                        },
+                                                        {
+                                                            id: 'project3',
+                                                            title: 'Design Work',
+                                                            content: `
                                     <div style="padding: 15px;">
                                         <h3 style="margin-bottom: 10px;">Design Work</h3>
                                         <p>Selected graphic design projects including:</p>
@@ -820,11 +801,11 @@
                                         <p>Created using Adobe Creative Suite.</p>
                                     </div>
                                 `
-                                                            },
-                                                            {
-                                                                id: 'project4',
-                                                                title: 'Experiments',
-                                                                content: `
+                                                        },
+                                                        {
+                                                            id: 'project4',
+                                                            title: 'Experiments',
+                                                            content: `
                                     <div style="padding: 15px;">
                                         <h3 style="margin-bottom: 10px;">Experiments</h3>
                                         <p>A playground for creative coding including:</p>
@@ -836,10 +817,23 @@
                                         <p>Built with various web technologies.</p>
                                     </div>
                                 `
-                                                            }
-                                                        ];
+                                                        }
+                                                    ];
 
-                                                        projects.forEach((project, index) => {
+                                                    // Check which project windows exist and which need to be created
+                                                    const existingWindows = new Set();
+                                                    projects.forEach(project => {
+                                                        const window = document.getElementById(project.id);
+                                                        if (window) {
+                                                            existingWindows.add(project.id);
+                                                            // Bring existing window to front
+                                                            window.style.zIndex = 100;
+                                                        }
+                                                    });
+
+                                                    // Create missing windows
+                                                    projects.forEach((project, index) => {
+                                                        if (!existingWindows.has(project.id)) {
                                                             createWindow(project.id, project.title, project.content);
 
                                                             // Position the window in a 2x2 grid
@@ -870,8 +864,8 @@
                                                             window.style.top = y + 'px';
                                                             window.style.width = windowWidth + 'px';
                                                             window.style.height = windowHeight + 'px';
-                                                        });
-                                                    }
+                                                        }
+                                                    });
 
                                                     // Close the start menu after clicking
                                                     document.getElementById('startMenu').style.display = 'none';
