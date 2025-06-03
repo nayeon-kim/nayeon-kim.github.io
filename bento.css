@@ -455,4 +455,35 @@
 
 .bento-body footer {
     background: none;
+}
+
+/* Link Styles for Bento */
+.bento-body a:not(.btn):not(.floating-button):not(.nav-link) {
+    color: #000;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+    font-weight: 700;
+}
+
+.bento-body a:not(.btn):not(.floating-button):not(.nav-link)::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s ease;
+}
+
+.bento-body a:not(.btn):not(.floating-button):not(.nav-link):hover::after {
+    width: 100%;
+}
+
+/* Nav bar links */
+.bento-body .nav-link {
+    color: #000;
+    font-weight: 700;
+    text-decoration: none;
 } 
