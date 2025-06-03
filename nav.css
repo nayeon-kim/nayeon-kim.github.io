@@ -71,7 +71,7 @@
 }
 
 .nav-link {
-    color: #888;
+    color: #a2a2a2;
     padding: 0.4em 0;
     border-radius: 2em;
     transition:
@@ -87,6 +87,11 @@
     justify-content: center;
 }
 
+.nav-link:hover,
+.nav-link:focus {
+    color: #000;
+}
+
 .bento-body .nav-link:hover,
 .bento-body .nav-link:focus {
     background: #cecece;
@@ -97,8 +102,7 @@
 .navbar a,
 .navbar a:link,
 .navbar a:visited {
-	text-decoration: none;
-    color: #000; /* Maintain font color after visit */
+    text-decoration: none;
 }
 
 /* Add padding to body to prevent content from hiding under fixed navbar */
@@ -132,4 +136,33 @@ body {
     left: 2rem;
     padding: .5rem .75rem;
     transform: none;
+}
+
+.bento-body .nav-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 100%;
+    background: #e5e5e5;
+    border-radius: 2em;
+    z-index: 0;
+    transition:
+        left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.2s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.bento-body .navbar-nav {
+    position: relative;
+}
+
+.bento-body .nav-link {
+    position: relative;
+    z-index: 1;
+    background: none !important;
 }

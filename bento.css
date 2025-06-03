@@ -38,6 +38,14 @@
     min-height: 320px;
     display: flex;
     align-items: center;
+    background: none;
+    box-shadow: none;
+}
+
+.intro-card:hover {
+    background: none;
+    box-shadow: none;
+    transform: none;
 }
 
 .intro-card h2 {
