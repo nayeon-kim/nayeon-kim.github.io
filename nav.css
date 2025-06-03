@@ -166,3 +166,7 @@ body {
     z-index: 1;
     background: none !important;
 }
+
+.nav-link.active {
+    color: #000 !important;
+}

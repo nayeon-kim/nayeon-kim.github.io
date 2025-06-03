@@ -32,6 +32,21 @@ class NavBar extends HTMLElement {
             const indicator = nav.querySelector('.nav-indicator');
             const links = nav.querySelectorAll('.nav-link');
 
+            // Highlight active link based on current page (bento)
+            const path = window.location.pathname;
+            links.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (
+                    (href === '/bento-work.html' && path.includes('bento-work')) ||
+                    (href === '/bento-play.html' && path.includes('bento-play')) ||
+                    (href === '/bento-about.html' && path.includes('bento-about')) ||
+                    (href === '/bento.html' && path === '/bento.html')
+                ) {
+                    link.classList.add('active');
+                }
+            });
+
             function moveIndicator(link) {
                 const rect = link.getBoundingClientRect();
                 const navRect = nav.getBoundingClientRect();
@@ -54,6 +69,22 @@ class NavBar extends HTMLElement {
             });
 
             hideIndicator();
+        } else {
+            // Classic (non-bento) pages: highlight active link
+            const nav = this.querySelector('.navbar-nav');
+            const links = nav.querySelectorAll('.nav-link');
+            const path = window.location.pathname;
+            links.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (
+                    (href.includes('index.html') && (path === '/' || path.includes('index.html'))) ||
+                    (href.includes('creative.html') && path.includes('creative')) ||
+                    (href.includes('about.html') && path.includes('about'))
+                ) {
+                    link.classList.add('active');
+                }
+            });
         }
     }
 }
