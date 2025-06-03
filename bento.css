@@ -211,7 +211,7 @@
 /* About Card */
 .about-card {
     grid-column: span 4;
-    grid-row: span 8;
+    grid-row: span 2;
 }
 
 .profile-img {
@@ -276,6 +276,116 @@
     color: #666;
     font-size: 0.9rem;
     margin: 0;
+}
+
+/* About Page Cards */
+.bento-about .bento-card {
+    background: none;
+    box-shadow: none;
+}
+
+.bento-about .bento-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.bento-about .left-content {
+    grid-column: 1 / span 7;
+    grid-row: 1 / span 4;
+    background: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.bento-about .right-content {
+    grid-column: 8 / span 5;
+    grid-row: 1 / span 4;
+    background: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.bento-about .profile-card {
+    grid-column: span 6;
+    grid-row: span 2;
+}
+
+.bento-about .about-content-card {
+    grid-column: span 6;
+    grid-row: span 2;
+}
+
+.bento-about .experience-card {
+    grid-column: span 6;
+    grid-row: span 4;
+}
+
+.bento-about .contact-card {
+    grid-column: span 12;
+    grid-row: span 1;
+}
+
+.bento-about .profile-img {
+    width: 120px;
+    height: auto;
+    border-radius: 0;
+    margin-bottom: 1rem;
+}
+
+.bento-about .subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+.bento-about .experience-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.bento-about .exp-info {
+    flex: 1;
+}
+
+.bento-about .exp-year {
+    color: #aeaeae;
+    white-space: nowrap;
+    margin-left: 2rem;
+    min-width: 70px;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+.bento-about .experience-item h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.bento-about .experience-item p {
+    color: #666;
+    margin: 0;
+}
+
+.bento-about .contact-links {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.bento-about .contact-link {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.bento-about .contact-link:hover {
+    color: #000;
 }
 
 /* Responsive Design */
