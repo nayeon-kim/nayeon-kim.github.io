@@ -130,3 +130,43 @@ h2 {
 .portfolio-container img {transition: .5s ease all; width: 200%; object-fit:cover;}
 
 .portfolio-container img:hover {transform: scale(1.15);}
+
+/* Floating Button */
+.floating-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #c3c3c3;
+    color: #e0e0e0;
+    padding: .1rem 1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(82, 82, 82, 0.05);
+    transition: all 0.5s ease, color 0.5s;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: auto;
+}
+
+.floating-button:hover, .floating-button:focus {
+    opacity: 1;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px rgba(127, 127, 127, 0.15);
+}
+
+/* Make the button visible when hovering near it (larger area) */
+.floating-button::before {
+    content: '';
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    right: -2rem;
+    bottom: -2rem;
+}
+
+.floating-button:hover, .floating-button:focus, .floating-button:active {
+    opacity: 1;
+    color: #fff;
+}

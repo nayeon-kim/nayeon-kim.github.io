@@ -1,0 +1,144 @@
+.bento-body {
+    background-color: #f8f8f8;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    padding: 2rem 0;
+}
+
+.bento-card {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Intro Card */
+.intro-card {
+    grid-column: span 8;
+    grid-row: span 1;
+}
+
+.intro-card h2 {
+    margin-bottom: 1rem;
+}
+
+/* Work Cards */
+.work-card {
+    grid-column: span 4;
+    grid-row: span 2;
+}
+
+.work-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.work-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.coming-soon {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* About Card */
+.about-card {
+    grid-column: span 4;
+    grid-row: span 2;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Play Card */
+.play-card {
+    grid-column: span 4;
+    grid-row: span 1;
+    background: linear-gradient(135deg, #816550 0%, #a88b7a 100%);
+    color: white;
+}
+
+.play-card a {
+    color: white;
+}
+
+.play-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .bento-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .intro-card {
+        grid-column: span 6;
+    }
+
+    .work-card {
+        grid-column: span 3;
+    }
+
+    .about-card {
+        grid-column: span 3;
+    }
+
+    .play-card {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 768px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .intro-card,
+    .work-card,
+    .about-card,
+    .play-card {
+        grid-column: span 1;
+    }
+
+    .work-card {
+        grid-row: span 1;
+    }
+} 
