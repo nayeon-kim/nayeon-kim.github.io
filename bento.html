@@ -28,7 +28,8 @@
 					<div class="bento-card intro-card">
 						<div class="card-content">
 							<h2>Hello 👋</h2>
-							<p>I'm Nayeon, a product designer based in SF 🌁 Currently designing the future of creative work at <a class="pink-link" href="https://www.patreon.com" target="_blank">Patreon</a> 🤎</p>
+							<p>I'm Nayeon, a product designer based in San Francisco. 🌁 <br>
+								Currently designing the future of creative work at <a class="pink-link" href="https://www.patreon.com" target="_blank">Patreon</a> 🤎</p>
 						</div>
 					</div>
 
@@ -76,11 +77,44 @@
 						</div>
 					</div>
 
-					<!-- Play Card -->
+					<!-- Featured Play Cards -->
+					<div class="bento-card work-card featured-play">
+						<a href="/bento-play.html" class="card-content">
+							<img src="" alt="Featured Art" class="featured-img">
+							<h3 class="featured-title"></h3>
+							<p class="featured-description"></p>
+						</a>
+					</div>
+
+					<div class="bento-card work-card featured-play">
+						<a href="/bento-play.html" class="card-content">
+							<img src="" alt="Featured Art" class="featured-img">
+							<h3 class="featured-title"></h3>
+							<p class="featured-description"></p>
+						</a>
+					</div>
+
+					<div class="bento-card work-card featured-play">
+						<a href="/bento-play.html" class="card-content">
+							<img src="" alt="Featured Art" class="featured-img">
+							<h3 class="featured-title"></h3>
+							<p class="featured-description"></p>
+						</a>
+					</div>
+
+					<div class="bento-card work-card featured-play">
+						<a href="/bento-play.html" class="card-content">
+							<img src="" alt="Featured Art" class="featured-img">
+							<h3 class="featured-title"></h3>
+							<p class="featured-description"></p>
+						</a>
+					</div>
+
+					<!-- Play Link Card -->
 					<div class="bento-card play-card">
-						<a href="/creative.html" class="card-content">
-							<h3>Play</h3>
-							<p>Check out my creative side</p>
+						<a href="/bento-play.html" class="card-content">
+							<h3>View All Play</h3>
+							<p>See more of my creative work</p>
 						</a>
 					</div>
 				</div>
@@ -102,5 +136,128 @@
 		<!-- Bootstrap JS -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="/navbar.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				// Array of all play items with their metadata
+				const playItems = [
+					// Digital Art
+					{
+						image: '/media/Procreate/Procreate_1.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_2.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_3.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_4.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_5.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_6.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_7.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_8.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_9.jpg',
+						title: 'Digital Illustration',
+						description: 'Procreate artwork'
+					},
+					// Pottery
+					{
+						image: '/media/Pottery/1.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/3.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/4.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/5.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/6.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/7.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/8.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/9.jpg',
+						title: 'Ceramic Art',
+						description: 'Handcrafted pottery'
+					},
+					// Interactive
+					{
+						image: '/media/retro-window-cover.png',
+						title: 'Retro Window',
+						description: 'Interactive web experience'
+					}
+				];
+
+				// Function to get random items from array
+				function getRandomItems(array, count) {
+					const shuffled = [...array].sort(() => 0.5 - Math.random());
+					return shuffled.slice(0, count);
+				}
+
+				// Get 4 random items
+				const selectedItems = getRandomItems(playItems, 4);
+
+				// Update the featured play cards
+				const featuredCards = document.querySelectorAll('.featured-play');
+				featuredCards.forEach((card, index) => {
+					const item = selectedItems[index];
+					const img = card.querySelector('.featured-img');
+					const title = card.querySelector('.featured-title');
+					const description = card.querySelector('.featured-description');
+
+					img.src = item.image;
+					img.alt = item.title;
+					title.textContent = item.title;
+					description.textContent = item.description;
+				});
+			});
+		</script>
 	</body>
 </html> 

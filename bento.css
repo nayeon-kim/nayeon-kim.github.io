@@ -92,8 +92,8 @@
     opacity: 1;
     transition: opacity 0.3s ease, 
                 transform 0.5s ease, 
-                grid-column 0.5s ease-in-out, 
-                grid-row 0.5s ease-in-out;
+                grid-column 0.6s ease-in-out, 
+                grid-row 0.6s ease-in-out;
     transform: translateY(0);
     cursor: pointer;
     will-change: grid-column, grid-row;
@@ -211,7 +211,7 @@
 /* About Card */
 .about-card {
     grid-column: span 4;
-    grid-row: span 2;
+    grid-row: span 8;
 }
 
 .profile-img {
@@ -242,6 +242,40 @@
 .play-card h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+}
+
+/* Featured Play Cards */
+.featured-play {
+    grid-column: span 4;
+    grid-row: span 2;
+}
+
+.featured-play .card-content {
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+}
+
+.featured-play img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.featured-play h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.featured-play p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
 }
 
 /* Responsive Design */
