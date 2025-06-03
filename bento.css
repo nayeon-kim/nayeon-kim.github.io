@@ -451,4 +451,8 @@
 .bento-card.about-card .btn:hover {
     background: #333;
     color: #fff;
+}
+
+.bento-body footer {
+    background: none;
 } 
