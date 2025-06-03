@@ -2,6 +2,36 @@
     background-color: #f8f8f8;
 }
 
+/* Filter Pills */
+.filter-pills {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    background: white;
+    color: #666;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filter-pill:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.filter-pill.active {
+    background: #000;
+    color: white;
+}
+
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -29,6 +59,101 @@
     flex-direction: column;
     text-decoration: none;
     color: inherit;
+}
+
+/* Section Headers */
+.section-header {
+    grid-column: span 12;
+    background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+    box-shadow: none;
+}
+
+.section-header:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.section-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Art Cards */
+.art-card {
+    grid-column: span 3;
+    grid-row: span 2;
+    padding: 0;
+    position: relative;
+    opacity: 1;
+    transition: opacity 0.3s ease, 
+                transform 0.5s ease, 
+                grid-column 0.5s ease-in-out, 
+                grid-row 0.5s ease-in-out;
+    transform: translateY(0);
+    cursor: pointer;
+    will-change: grid-column, grid-row;
+}
+
+.art-card.expanded {
+    grid-column: span 6;
+    grid-row: span 4;
+    z-index: 10;
+    transform: scale(1.02);
+}
+
+.art-card.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+}
+
+.art-card .card-content {
+    padding: 0;
+    height: 100%;
+}
+
+.art-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.art-card:hover img {
+    transform: scale(1.05);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.art-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.card-overlay h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-overlay p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 /* Intro Card */
@@ -125,11 +250,13 @@
         grid-template-columns: repeat(6, 1fr);
     }
 
-    .intro-card {
+    .intro-card,
+    .section-header {
         grid-column: span 6;
     }
 
-    .work-card {
+    .work-card,
+    .art-card {
         grid-column: span 3;
     }
 
@@ -151,11 +278,18 @@
     .intro-card,
     .work-card,
     .about-card,
-    .play-card {
+    .play-card,
+    .art-card,
+    .section-header {
         grid-column: span 1;
     }
 
-    .work-card {
+    .work-card,
+    .art-card {
         grid-row: span 1;
+    }
+
+    .filter-pills {
+        justify-content: center;
     }
 } 
