@@ -5,8 +5,8 @@
 /* Filter Pills */
 .filter-pills {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0;
+    gap: 1rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 
@@ -278,28 +278,6 @@
     margin: 0;
 }
 
-.featured-play .featured-meta {
-    display: flex;
-    gap: 0.5em;
-    align-items: center;
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: #b0b0b0;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    letter-spacing: 0.01em;
-}
-
-.featured-play .featured-title,
-.featured-play .featured-description {
-    font-size: inherit;
-    font-weight: inherit;
-    color: inherit;
-    margin: 0;
-    padding: 0;
-    display: inline;
-}
-
 /* About Page Cards */
 .bento-about .bento-card {
     background: none;
@@ -473,35 +451,4 @@
 .bento-card.about-card .btn:hover {
     background: #333;
     color: #fff;
-}
-
-.work-meta {
-    display: flex;
-    gap: 0.5em;
-    align-items: center;
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: #b0b0b0;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
-    letter-spacing: 0.01em;
-}
-
-.work-title,
-.work-description {
-    font-size: inherit;
-    font-weight: inherit;
-    color: inherit;
-    margin: 0;
-    padding: 0;
-    display: inline;
-}
-
-.bento-body footer {
-    background: none;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-    box-sizing: border-box;
 } 
