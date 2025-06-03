@@ -32,16 +32,65 @@
     z-index: 1000;
 }
 
+/* Bento style specific nav */
+.bento-body .navbar {
+    position: fixed;
+    top: 1rem;
+    left: 2rem;
+    width: 20%;
+    max-width: 1200px;
+    border-radius: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: .5rem .75rem;
+    margin: 0;
+}
+
+.bento-body .navbar header {
+    padding: 0 !important;
+}
+
+.bento-body .navbar .container-fluid {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-nav-wrapper {
+    margin-left: auto;
+}
+
 .nav-logo:hover {
     color: black;
 }
-.nav-link {
-    color: black;
-    margin: 0 0.5rem;
+
+.navbar-nav {
+    display: flex;
+    width: 100%;
+    /* gap: 1rem; */
 }
 
-.nav-link:hover {
-    color: #666;
+.nav-link {
+    color: #888;
+    padding: 0.4em 0;
+    border-radius: 2em;
+    transition:
+        background 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+    width: 70px;
+    text-align: center;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bento-body .nav-link:hover,
+.bento-body .nav-link:focus {
+    background: #cecece;
+    color: #000;
 }
 
 /* Nav links styling */
@@ -57,6 +106,10 @@ body {
     padding-top: 6rem;
 }
 
+.bento-body {
+    padding-top: 5rem;
+}
+
 @media (max-width: 768px) {
     .navbar-nav {
         padding-top: 1rem;
@@ -65,4 +118,18 @@ body {
     .nav-link {
         padding: 0.5rem 0;
     }
+
+    .bento-body .navbar {
+        width: 90%;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+    }
+}
+
+.bento-body .navbar {
+    width: 20%;
+    margin: 0;
+    left: 2rem;
+    padding: .5rem .75rem;
+    transform: none;
 }

@@ -33,12 +33,21 @@
 
 /* Intro Card */
 .intro-card {
-    grid-column: span 8;
-    grid-row: span 1;
+    grid-column: span 12;
+    grid-row: span 2;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
 }
 
 .intro-card h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.8rem;
+}
+
+.intro-card p {
+    font-size: 1.5rem;
+    line-height: 1.5;
 }
 
 /* Work Cards */

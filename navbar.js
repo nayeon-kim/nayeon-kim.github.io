@@ -5,16 +5,16 @@ class NavBar extends HTMLElement {
     }
 
     connectedCallback() {
+        // Check if body has 'bento-body' class
+        const isBento = document.body.classList.contains('bento-body');
+        const paddingClass = isBento ? '' : 'p-3';
         this.innerHTML = `
-            <header class="navbar navbar-expand-md fixed-top p-3">
+            <header class="navbar navbar-expand-md fixed-top ${paddingClass}">
                 <div class="container-fluid container">
-					<div class="nav-logo">	
-						<img src="/media/favicon.png">
-					</div>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="border-style: none;">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <nav class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <div class="nav-logo">
+                        <img src="/media/favicon.png">
+                    </div>
+                    <nav class="navbar-nav-wrapper">
                         <ul class="navbar-nav">
                             <li><a href="/index.html#portfolio" class="nav-link">Work</a></li>
                             <li><a href="/creative.html" class="nav-link">Play</a></li>
