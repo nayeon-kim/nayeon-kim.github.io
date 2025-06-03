@@ -11,15 +11,15 @@ class NavBar extends HTMLElement {
         this.innerHTML = `
             <header class="navbar navbar-expand-md fixed-top ${paddingClass}">
                 <div class="container-fluid container">
-                    <div class="nav-logo">
+                    <a href="${isBento ? '/bento.html' : '/index.html'}" class="nav-logo">
                         <img src="/media/favicon.png">
-                    </div>
+                    </a>
                     <nav class="navbar-nav-wrapper">
                         <ul class="navbar-nav">
                             ${isBento ? '<div class="nav-indicator"></div>' : ''}
-                            <li><a href="/index.html#portfolio" class="nav-link">Work</a></li>
-                            <li><a href="/creative.html" class="nav-link">Play</a></li>
-                            <li><a href="/about.html" class="nav-link">About</a></li>
+                            <li><a href="${isBento ? '/bento-work.html' : '/index.html#portfolio'}" class="nav-link">Work</a></li>
+                            <li><a href="${isBento ? '/bento-play.html' : '/creative.html'}" class="nav-link">Play</a></li>
+                            <li><a href="${isBento ? '/bento-about.html' : '/about.html'}" class="nav-link">About</a></li>
                         </ul>
                     </nav>
                 </div>
