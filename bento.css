@@ -438,6 +438,42 @@
     }
 }
 
+@media (max-width: 600px) {
+    .bento-about .bento-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+        padding: 1rem 0 !important;
+    }
+    .bento-about .left-content,
+    .bento-about .right-content {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+        padding: 0 !important;
+    }
+    .bento-about .profile-img {
+        width: 80px !important;
+        height: auto !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .bento-about .card-content {
+        padding: 1rem !important;
+    }
+    .bento-about .experience-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.25rem !important;
+    }
+    .bento-about .exp-year {
+        margin-left: 0 !important;
+        min-width: 0 !important;
+        text-align: left !important;
+        margin-bottom: 0.25rem !important;
+    }
+    .bento-about .exp-info {
+        padding-left: 0 !important;
+    }
+}
+
 .bento-card.about-card .profile-img {
     border-radius: 0;
     height: auto;
