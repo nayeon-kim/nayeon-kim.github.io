@@ -17,9 +17,9 @@ class NavBar extends HTMLElement {
                     <nav class="navbar-nav-wrapper">
                         <ul class="navbar-nav">
                             ${isBento ? '<div class="nav-indicator"></div>' : ''}
-                            <li><a href="${isBento ? '/bento-work.html' : '/index.html#portfolio'}" class="nav-link">Work</a></li>
-                            <li><a href="${isBento ? '/bento-play.html' : '/creative.html'}" class="nav-link">Play</a></li>
-                            <li><a href="${isBento ? '/bento-about.html' : '/about.html'}" class="nav-link">About</a></li>
+                            <li><a href="/work.html" class="nav-link">Work</a></li>
+                            <li><a href="/play.html" class="nav-link">Play</a></li>
+                            <li><a href="/about.html" class="nav-link">About</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -44,9 +44,9 @@ class NavBar extends HTMLElement {
                 link.classList.remove('active');
                 const href = link.getAttribute('href');
                 if (
-                    (href === '/bento-work.html' && path.includes('bento-work')) ||
-                    (href === '/bento-play.html' && path.includes('bento-play')) ||
-                    (href === '/bento-about.html' && path.includes('bento-about'))
+                    (href === '/work.html' && path.includes('work')) ||
+                    (href === '/play.html' && path.includes('play')) ||
+                    (href === '/about.html' && path.includes('about'))
                 ) {
                     link.classList.add('active');
                     activeLink = link;

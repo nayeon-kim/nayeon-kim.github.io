@@ -7,66 +7,98 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;0,6..12,1000;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800;1,6..12,900;1,6..12,1000&display=swap" rel="stylesheet">
-		<!-- Flexgrid -->
-		<link rel="stylesheet" href="https://unpkg.com/flexgrid.io@3.0.4/dist/flexgrid.min.css"/>
 		<!-- Bootstrap -->
-		<link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 		<!-- Style sheets -->
 		<link rel="stylesheet" href="styles.css">
 		<link rel="stylesheet" href="nav.css">
-		<link rel="stylesheet" href="work.css">
-
-		<!-- Add the Font Awesome stylesheet link -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-		<title>Nayeon Kim</title>
+		<link rel="stylesheet" href="bento.css">
 		<!-- Favicon -->
 		<link rel="icon" type="image/x-icon" href="/media/favicon.png">
-		<title>Nayeon Kim</title>
+		<title>About - Nayeon Kim</title>
 	</head>
-	<body>
+	<body class="bento-body bento-about">
 		<div class="d-flex flex-column min-vh-100 vh-100">
 			<nav-bar></nav-bar>
+
 			<div class="container content-wrap">
-				<div class="row pt-5 align-items-center">
-					<div class="col-sm-5 d-flex justify-content-center pe-5">
-						<img class="img-fluid" src="/media/profile-nk-memoji.png" alt="Memoji">
-					</div>
-					<div class="col px-4 mb-5">
-						<!--  Text container  -->
-						<div class="d-flex flex-column justify-content-md-start justify-content-center my-3 hero">
-							<h2>Nice to meet you! 👋</h2>
-							
-							<p style="line-height: 1.4; font-size:1.4em;"> I'm Nayeon, a product designer in San Francisco, currently at <a href="https://www.patreon.com" class="pink-link" target="_blank">Patreon</a>. <br><br>
-							Prior to this I've worked with <a href="https://www.lyft.com" class="pink-link" target="_blank">Lyft</a>, <a href=https://design.samsung.com/global/contents/sdic/ class="pink-link" target="_blank">Samsung</a>,<a href="https://www.instagram.com" class="pink-link" target="_blank"> Instagram</a>, and a number of startups. I find joy in building 0 to 1 products while advocating for user-centric processes along the way. <br><br> Outside design, you will probably find me doodling on my iPad, making pottery, tending to my indoor plants, or fostering kittens.
+				<!-- Bento Grid -->
+				<div class="bento-grid">
+					<!-- Left: Profile + About Content -->
+					<div class="bento-card left-content">
+						<div class="card-content">
+							<img src="/media/profile-nk-memoji.png" alt="Profile" class="profile-img">
+							<h1>Nayeon Kim</h1>
+							<p style="font-size: 1.3em;">I'm a product designer based in San Francisco, currently designing the future of creative work at Patreon. Previously, I've worked at Lyft, Samsung, and Instagram, where I've focused on creating meaningful and intuitive user experiences.</p>
+							<div style="display: inline-block;">
+								<a href="/media/resume2024.pdf" download class="btn" style="background-color: black;">Resume</a>
+							</div>
 						</div>
-						<!--  Button container  -->
-					<div class="d-flex">
-							<div class="d-flex justify-content-md-start justify-content-center" style="margin-right: 18px;">
-								<a class="btn" href="/media/resume2024.pdf" download>Download Resume </a>
-							</div>
-							<div class="d-flex justify-content-md-start justify-content-center">
-								<a class="btn" href = "mailto:hellonaykim@gmail.com?subject=Hello! Let's Chat.">💌 Email me </a>
-							</div>
 					</div>
 
+					<!-- Right: Experience -->
+					<div class="bento-card right-content">
+						<div class="card-content">
+							<h3 style="margin-bottom: 1rem;">Experience</h3>
+							<div class="experience-item" style="align-items: flex-start;">
+								<span class="exp-year" style="padding-left: 0; margin-left: 0;">2024-Now</span>
+								<div class="exp-info" style="padding-left: 48px;">
+									<p style="font-weight: 700;">Patreon</p>
+									<p>Product Designer</p>
+								</div>
+							</div>
+							<div class="experience-item" style="align-items: flex-start;">
+								<span class="exp-year" style="padding-left: 0; margin-left: 0;">2020–2023</span>
+								<div class="exp-info" style="padding-left: 48px;">
+									<p style="font-weight: 700;">Lyft</p>
+									<p>Product Designer</p>
+								</div>
+							</div>
+							<div class="experience-item" style="align-items: flex-start;">
+								<span class="exp-year" style="padding-left: 0; margin-left: 0;">2019–2020</span>
+								<div class="exp-info" style="padding-left: 48px;">
+									<p style="font-weight: 700;">Samsung</p>
+									<p>UX Designer</p>
+								</div>
+							</div>
+							<div class="experience-item" style="align-items: flex-start;">
+								<span class="exp-year" style="padding-left: 0; margin-left: 0;">2016-2019</span>
+								<div class="exp-info" style="padding-left: 48px;">
+									<p style="font-weight: 700;">Instagram</p>
+									<p>Mobile Engineer</p>
+								</div>
+							</div>
+						</div>
+						<div class="card-content">
+							<h3 style="margin-bottom: 1rem;">Recognition</h3>
+							<div class="experience-item" style="align-items: flex-start;">
+								<span class="exp-year" style="padding-left: 0; margin-left: 0; text-align: left;">2025</span>
+								<div class="exp-info" style="padding-left: 48px;">
+									<p style="font-weight: 700;">Webby Awards Honoree</p>
+									<p>Denis Talks to Friends, Web Magazine | Creative direction</p>
+								</div>
+							</div>
+							<div class="experience-item" style="align-items: flex-start;">
+								<span class="exp-year" style="padding-left: 0; margin-left: 0; text-align: left;">2025</span>
+								<div class="exp-info" style="padding-left: 48px;">
+									<p style="font-weight: 700;">Communicator Awards: Art Direction & Visual Appeal Winner</p>
+									<p>Denis Talks to Friends, Web Magazine | Creative direction</p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-
-				<footer class="d-flex flex-wrap-reverse justify-content-center fixed-bottom">
-					<p class="d-flex align-items-center mb-0 me-md-auto">&copy; 2024 Nayeon Kim. All rights reserved. </p>
-					<ul class="footer-nav nav col-md-4 justify-content-end">
-						<li class="nav-item p-2"><a href = "mailto:hellonaykim@gmail.com?subject=Hello! Let's Chat.">Email</a></li>
-						<li class="nav-item p-2"><a href="https://www.instagram.com/_yours_gladys/" target="_blank">Instagram </a></li>
-						<li class="nav-item p-2"><a href="https://www.linkedin.com/in/nayeonk/" target="_blank">LinkedIn</a></li>
-					</ul>
-				</footer>
 			</div>
+
+			<site-footer></site-footer>
 		</div>
+
+		<!-- Floating Button -->
+		<a href="/about.html" class="floating-button">Classic Style</a>
+
 		<!-- Bootstrap JS -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="/navbar.js"></script>
-		<!-- Gradient implementation -->
-<!--		<script src="mouseTracking.js"></script>-->
+		<script src="/footer.js"></script>
 	</body>
-</html>
+</html> 

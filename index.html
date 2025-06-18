@@ -3,106 +3,285 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="refresh" content="0; url=/bento.html" />
 		<!-- Nunito Sans -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;0,6..12,1000;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800;1,6..12,900;1,6..12,1000&display=swap" rel="stylesheet">
-		<!-- General Sans -->
-		<link href="https://fonts.cdnfonts.com/css/general-sans" rel="stylesheet">
-
-		<!-- Flexgrid -->
-		<link rel="stylesheet" href="https://unpkg.com/flexgrid.io@3.0.4/dist/flexgrid.min.css"/>
 		<!-- Bootstrap -->
-		<link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
-
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 		<!-- Style sheets -->
 		<link rel="stylesheet" href="styles.css">
 		<link rel="stylesheet" href="nav.css">
-		<link rel="stylesheet" href="cs.css">
-
-		<!-- Add the Font Awesome stylesheet link -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
+		<link rel="stylesheet" href="bento.css">
 		<!-- Favicon -->
 		<link rel="icon" type="image/x-icon" href="/media/favicon.png">
 		<title>Nayeon Kim</title>
 	</head>
-
-	<body>
-		
+	<body class="bento-body">
 		<div class="d-flex flex-column min-vh-100 vh-100">
 			<nav-bar></nav-bar>
 
-			<div class=" d-flex flex-column container content-wrap">
-				<div class="d-flex flex-column justify-content-center w-100 h-25 my-3" style="padding-top: 7rem;">
-					<div class="hero d-flex flex-column text-left">
-						<p> Hello 👋 I'm Nayeon, a product designer based in SF 🌁 Currently, I'm designing the future of creative work at <a class="pink-link" href="https://www.patreon.com" target="_blank">Patreon</a> 🤎.
+			<div class="container content-wrap">
+				<!-- Bento Grid -->
+				<div class="bento-grid">
+					<!-- Intro Card -->
+					<div class="bento-card intro-card">
+						<div class="card-content">
+							<h2>Hello 👋</h2>
+							<p>I'm Nayeon, a product designer based in San Francisco. 🌁 <br>
+								Currently designing the future of creative work at <a href="https://www.patreon.com" target="_blank">Patreon</a> 🤎</p>
+						</div>
+					</div>
+
+					<!-- Featured Header -->
+					<div class="bento-card section-header">
+						<div class="card-content">
+							<h3>Featured</h3>
+						</div>
+					</div>
+
+					<!-- Work Cards -->
+					<div class="bento-card work-card home-card">
+						<a href="https://www.hellonayeon.com/lyft-assistive-protected.html" class="card-content">
+							<div class="image-wrapper" style="background-color: #0A6E62; border-radius: 0.5rem;">
+								<img src="/media/lyft-assistive-cover.png" alt="Lyft Assistive">
+							</div>
+							<div class="card-meta">
+								<span class="card-title">Lyft Assistive</span>
+								<a href="/work.html" class="card-category">Work <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div>
+
+					<div class="bento-card work-card home-card">
+						<a href="https://www.hellonayeon.com/lyft-home-protected.html" class="card-content">
+							<div class="image-wrapper" style="background-color: #785EF0; border-radius: 0.5rem;">
+								<img src="/media/lyft-home-cover.png" alt="Lyft Home">
+							</div>
+							<div class="card-meta">
+								<span class="card-title">Lyft Home</span>
+								<a href="/work.html" class="card-category">Work <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div>
+
+					<!-- <div class="bento-card work-card home-card">
+						<a href="#" class="card-content">
+							<div class="image-wrapper">
+								<img src="/media/samsung-sm-cover.png" alt="Samsung Shared Memories">
+							</div>
+							<div class="card-meta">
+								<span class="card-title">Samsung Shared Memories</span>
+								<a href="/work.html" class="card-category">Work <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div>
+
+					<div class="bento-card work-card home-card">
+						<a href="#" class="card-content">
+							<div class="image-wrapper">
+								<img src="/media/samsung-st-cover.png" alt="Samsung Single Take">
+							</div>
+							<div class="card-meta">
+								<span class="card-title">Samsung Single Take</span>
+								<a href="/work.html" class="card-category">Work <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div> -->
+
+					<!-- Featured Play Cards -->
+					<div class="bento-card work-card featured-play home-card">
+						<a href="/play.html" class="card-content">
+							<div class="image-wrapper">
+								<img src="" alt="Featured Art" class="featured-img">
+							</div>
+							<div class="card-meta">
+								<span class="card-title featured-title"></span>
+								<a href="/play.html" class="card-category">Play <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div>
+
+					<div class="bento-card work-card featured-play home-card">
+						<a href="/play.html" class="card-content">
+							<div class="image-wrapper">
+								<img src="" alt="Featured Art" class="featured-img">
+							</div>
+							<div class="card-meta">
+								<span class="card-title featured-title"></span>
+								<a href="/play.html" class="card-category">Play <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div>
+
+					<div class="bento-card work-card featured-play home-card">
+						<a href="/play.html" class="card-content">
+							<div class="image-wrapper">
+								<img src="" alt="Featured Art" class="featured-img">
+							</div>
+							<div class="card-meta">
+								<span class="card-title featured-title"></span>
+								<a href="/play.html" class="card-category">Play <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div>
+
+					<div class="bento-card work-card featured-play home-card">
+						<a href="/play.html" class="card-content">
+							<div class="image-wrapper">
+								<img src="" alt="Featured Art" class="featured-img">
+							</div>
+							<div class="card-meta">
+								<span class="card-title featured-title"></span>
+								<a href="/play.html" class="card-category">Play <span style="font-size:1.2em; margin-left:0.2em;">&#8599;</span></a>
+							</div>
+						</a>
+					</div>
+
+					<!-- About Card (moved to end) -->
+					<div class="bento-card about-card">
+						<div class="card-content">
+							<img src="/media/profile-nk-memoji.png" alt="Profile" class="profile-img">
+							<div class="button-group">
+								<a href="mailto:hellonaykim@gmail.com?subject=Hello! Let's Chat." class="btn">💌 Say hi!</a>
+							</div>
+						</div>
 					</div>
 				</div>
-
-				<!-- Portfolio / Work Section -->
-				<section class="portfolio container" id="portfolio" style="padding-top: 7rem;">
-					<!-- Lyft -->
-					<div class="row row-cols-1 row-cols-md-2 g-4 mb-3">
-						<div class="col position-relative">
-							<!-- Assistive Travel XP -->
-							<a href="https://www.hellonayeon.com/lyft-assistive-protected.html" class="portfolio-container position-relative" id="lyft-assistive">
-								<img class="cover-screens img-fluid" src="/media/lyft-assistive-cover.png" alt="Cover Image">
-							</a>
-							<img class="cover-logo position-absolute bottom-0 end-0" src="/media/lyft-logo-cover.png" alt="Cover Image">
-						</div>
-						<div class="col position-relative">
-							<!-- Contextual Home -->
-							<a href="https://www.hellonayeon.com/lyft-home-protected.html" class="portfolio-container" id="lyft-home">
-								<img class="cover-screens img-fluid" src="/media/lyft-home-cover.png" alt="Cover Image">
-							</a>
-							<img class="cover-logo position-absolute bottom-0 end-0" src="/media/lyft-logo-cover.png" alt="img">
-						</div>
-					</div>
-
-					<!-- Samsung -->
-					<div class="row row-cols-1 row-cols-md-2 g-4 mb-3">
-						<div class="col position-relative">
-							<!-- Shared memories -->
-							<!-- TODO: Add href tag here -->
-							<a class="portfolio-container" role="link" id="samsung-sm">
-								<img class="img-fluid" src="/media/samsung-sm-cover.png" alt="img">
-							</a>
-							<img class="cover-logo position-absolute bottom-0 end-0" src="/media/samsung-logo-cover.png" alt="img">
-							<h2 class="cover-logo position-absolute top-50 start-50 translate-middle" style="color:white;"><i>Coming soon</i></h2>
-						</div>
-						<!-- Single take -->
-						<!-- TODO: Add href tag here -->
-						<div class="col position-relative">
-							<a class="portfolio-container" role="link" id="samsung-st">
-								<img class="img-fluid" src="/media/samsung-st-cover.png" alt="img">
-							</a>
-							<img class="cover-logo position-absolute bottom-0 end-0" src="/media/samsung-logo-cover.png" alt="img">
-							<h2 class="cover-logo position-absolute top-50 start-50 translate-middle" style="color:white;"><i>Coming soon</i></h2>
-						</div>
-					</div>
-				</section>
 			</div>
-			<footer class="d-flex flex-wrap-reverse justify-content-center">
-				<p class="d-flex align-items-center mb-0 me-md-auto">&copy; 2024 Nayeon Kim. All rights reserved. </p>
-				<ul class="footer-nav nav col-md-4 justify-content-end">
-					<li class="nav-item p-2"><a href = "mailto:hellonaykim@gmail.com?subject=Hello! Let's Chat.">Email </a></li>
-					<li class="nav-item p-2"><a href="https://www.instagram.com/_yours_gladys/" target="_blank">Instagram </a></li>
-					<li class="nav-item p-2"><a href="https://www.linkedin.com/in/nayeonk/" target="_blank">LinkedIn</a></li>
-				</ul>
-			</footer>
+
+			<site-footer></site-footer>
 		</div>
 
 		<!-- Floating Button -->
-		<a href="/bento.html" class="floating-button">Bento Style</a>
+		<!--
+		<a href="/index.html" class="floating-button">Classic Style</a>
+		-->
 
 		<!-- Bootstrap JS -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="/navbar.js"></script>
-		<!-- Gradient implementation -->
-<!--		<script src="mouseTracking.js"></script>-->
+		<script src="/footer.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				// Array of all play items with their metadata
+				const playItems = [
+					// Digital Art
+					{
+						image: '/media/Procreate/Procreate_1.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_2.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_3.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_4.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_5.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_6.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_7.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_8.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					{
+						image: '/media/Procreate/Procreate_9.jpg',
+						title: 'Digital Art',
+						description: 'Procreate artwork'
+					},
+					// Pottery
+					{
+						image: '/media/Pottery/1.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/3.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/4.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/5.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/6.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/7.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/8.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					{
+						image: '/media/Pottery/9.jpg',
+						title: 'Pottery',
+						description: 'Handcrafted pottery'
+					},
+					// Interactive
+					// {
+					// 	image: '/media/retro-window-cover.png',
+					// 	title: 'Retro Window',
+					// 	description: 'Interactive web experience'
+					// }
+				];
 
+				// Function to get random items from array
+				function getRandomItems(array, count) {
+					const shuffled = [...array].sort(() => 0.5 - Math.random());
+					return shuffled.slice(0, count);
+				}
+
+				// Get 4 random items
+				const selectedItems = getRandomItems(playItems, 4);
+
+				// Update the featured play cards
+				const featuredCards = document.querySelectorAll('.featured-play');
+				featuredCards.forEach((card, index) => {
+					const item = selectedItems[index];
+					const img = card.querySelector('.featured-img');
+					const title = card.querySelector('.card-title.featured-title');
+
+					img.src = item.image;
+					img.alt = item.title;
+					title.textContent = item.title;
+				});
+			});
+		</script>
 	</body>
-</html>
+</html> 
