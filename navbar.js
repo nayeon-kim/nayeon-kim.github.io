@@ -32,58 +32,93 @@ class NavBar extends HTMLElement {
             const indicator = nav.querySelector('.nav-indicator');
             const links = nav.querySelectorAll('.nav-link');
 
+            // Track current indicator target to prevent unnecessary animations
+            let currentTarget = null;
+
             // Highlight active link based on current page (bento)
             const path = window.location.pathname;
             let activeLink = null;
+            let isHomePage = path === '/bento.html';
+            
             links.forEach(link => {
                 link.classList.remove('active');
                 const href = link.getAttribute('href');
                 if (
                     (href === '/bento-work.html' && path.includes('bento-work')) ||
                     (href === '/bento-play.html' && path.includes('bento-play')) ||
-                    (href === '/bento-about.html' && path.includes('bento-about')) ||
-                    (href === '/bento.html' && path === '/bento.html')
+                    (href === '/bento-about.html' && path.includes('bento-about'))
                 ) {
                     link.classList.add('active');
                     activeLink = link;
                 }
             });
 
-            function moveIndicator(link) {
+            function moveIndicator(link, animate = true) {
+                // Don't animate if already positioned correctly for this link
+                if (currentTarget === link && animate) {
+                    return;
+                }
+                
+                // Update current target
+                currentTarget = link;
+                
+                // Temporarily disable transitions if not animating
+                if (!animate) {
+                    indicator.style.transition = 'none';
+                } else {
+                    indicator.style.transition = 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), top 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s';
+                }
+                
                 indicator.style.left = (link.offsetLeft) + 'px';
                 indicator.style.width = link.offsetWidth + 'px';
                 indicator.style.top = (link.offsetTop) + 'px';
                 indicator.style.height = link.offsetHeight + 'px';
                 indicator.style.opacity = 1;
+                
+                // Re-enable transitions after positioning
+                if (!animate) {
+                    // Use requestAnimationFrame to ensure the position is set before re-enabling transitions
+                    requestAnimationFrame(() => {
+                        indicator.style.transition = 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), top 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s';
+                    });
+                }
             }
 
             function hideIndicator() {
                 indicator.style.opacity = 0;
+                currentTarget = null;
             }
 
-            function showActiveIndicator() {
+            function showActiveIndicator(animate = false) {
                 if (activeLink) {
-                    moveIndicator(activeLink);
+                    moveIndicator(activeLink, animate);
                 }
             }
 
-            // Position indicator for active link initially
-            if (activeLink) {
-                moveIndicator(activeLink);
+            // Position indicator for active link initially without animation
+            // Hide indicator if on home page (no active nav link)
+            if (isHomePage) {
+                hideIndicator();
+            } else if (activeLink) {
+                moveIndicator(activeLink, false);
             }
 
             links.forEach(link => {
-                link.addEventListener('mouseenter', () => moveIndicator(link));
-                link.addEventListener('focus', () => moveIndicator(link));
+                link.addEventListener('mouseenter', () => moveIndicator(link, true));
+                link.addEventListener('focus', () => moveIndicator(link, true));
                 link.addEventListener('mouseleave', () => {
-                    // Only hide indicator if we're not leaving the active link
-                    if (link !== activeLink) {
+                    // Hide indicator if on home page, otherwise show active indicator
+                    if (isHomePage) {
+                        hideIndicator();
+                    } else if (link !== activeLink) {
                         hideIndicator();
                     }
                 });
                 link.addEventListener('blur', () => {
-                    // Only hide indicator if we're not blurring the active link
-                    if (link !== activeLink) {
+                    // Hide indicator if on home page, otherwise show active indicator
+                    if (isHomePage) {
+                        hideIndicator();
+                    } else if (link !== activeLink) {
                         hideIndicator();
                     }
                 });
