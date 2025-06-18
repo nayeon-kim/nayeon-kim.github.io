@@ -52,7 +52,7 @@
 }
 
 .card-content {
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -65,6 +65,7 @@
     grid-column: span 12;
     background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
     box-shadow: none;
+    border-radius: 0;
 }
 
 .section-header:hover {
@@ -73,13 +74,23 @@
 }
 
 .section-header h3 {
-    font-size: 1.8rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
+    color: #b1b1b1;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .section-header p {
     color: #666;
     font-size: 1.1rem;
+}
+
+/* Home page section header: no background */
+.bento-body .section-header {
+    background: none;
+    box-shadow: none;
 }
 
 /* Art Cards */
@@ -184,10 +195,37 @@
 
 /* Work Cards */
 .work-card {
-    grid-column: span 4;
+    grid-column: span 6;
     grid-row: span 2;
 }
 
+/* Home page work cards: 3-column layout */
+.work-card.home-card {
+    grid-column: span 4;
+}
+
+/* Work page specific styling */
+.bento-work .work-card .card-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.bento-work .work-card img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.bento-work .work-card .text-content {
+    flex: 1;
+}
+
+/* General work card styling (for home page and other pages) */
 .work-card img {
     width: 100%;
     height: 200px;
@@ -201,6 +239,10 @@
     margin-bottom: 0.5rem;
 }
 
+.work-card p {
+    margin-bottom: 0.5rem;
+}
+
 .coming-soon {
     font-size: 0.9rem;
     color: #666;
@@ -211,6 +253,10 @@
 .about-card {
     grid-column: span 4;
     grid-row: span 2;
+}
+
+.about-card .card-content {
+    padding: 1.5rem;
 }
 
 .profile-img {
@@ -250,7 +296,7 @@
 }
 
 .featured-play .card-content {
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -419,12 +465,19 @@
     }
 
     .intro-card,
+    .section-header,
+    .about-card {
+        grid-column: 1 / -1;
+        width: 100%;
+        min-width: 100%;
+        display: block;
+    }
+
     .work-card,
-    .about-card,
     .play-card,
-    .art-card,
-    .section-header {
+    .art-card {
         grid-column: span 1;
+        width: 100%;
     }
 
     .work-card,
