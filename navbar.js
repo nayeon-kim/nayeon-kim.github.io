@@ -11,7 +11,7 @@ class NavBar extends HTMLElement {
         this.innerHTML = `
             <header class="navbar navbar-expand-md fixed-top ${paddingClass}">
                 <div class="container-fluid container">
-                    <a href="${isBento ? '/bento.html' : '/index.html'}" class="nav-logo">
+                    <a href="/" class="nav-logo">
                         <img src="/media/favicon.png">
                     </a>
                     <nav class="navbar-nav-wrapper">
@@ -38,7 +38,7 @@ class NavBar extends HTMLElement {
             // Highlight active link based on current page (bento)
             const path = window.location.pathname;
             let activeLink = null;
-            let isHomePage = path === '/bento.html';
+            let isHomePage = path === '/' || path === '/index.html';
             
             links.forEach(link => {
                 link.classList.remove('active');
