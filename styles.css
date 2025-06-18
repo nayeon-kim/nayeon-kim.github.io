@@ -19,7 +19,7 @@ header {
 }
 
 footer {
-	color: #dbdbdb;
+	color: #b1b1b1;
 	padding: 20px;
 	background-color: #fff;
 	margin: 0 2rem; /* must match content-wrap */
@@ -136,7 +136,7 @@ h2 {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    background-color: #c3c3c3;
+    background-color: #e9e9e9;
     color: #e0e0e0;
     padding: .1rem 1rem;
     border-radius: 50px;
