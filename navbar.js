@@ -34,6 +34,7 @@ class NavBar extends HTMLElement {
 
             // Highlight active link based on current page (bento)
             const path = window.location.pathname;
+            let activeLink = null;
             links.forEach(link => {
                 link.classList.remove('active');
                 const href = link.getAttribute('href');
@@ -44,12 +45,11 @@ class NavBar extends HTMLElement {
                     (href === '/bento.html' && path === '/bento.html')
                 ) {
                     link.classList.add('active');
+                    activeLink = link;
                 }
             });
 
             function moveIndicator(link) {
-                const rect = link.getBoundingClientRect();
-                const navRect = nav.getBoundingClientRect();
                 indicator.style.left = (link.offsetLeft) + 'px';
                 indicator.style.width = link.offsetWidth + 'px';
                 indicator.style.top = (link.offsetTop) + 'px';
@@ -61,14 +61,33 @@ class NavBar extends HTMLElement {
                 indicator.style.opacity = 0;
             }
 
+            function showActiveIndicator() {
+                if (activeLink) {
+                    moveIndicator(activeLink);
+                }
+            }
+
+            // Position indicator for active link initially
+            if (activeLink) {
+                moveIndicator(activeLink);
+            }
+
             links.forEach(link => {
                 link.addEventListener('mouseenter', () => moveIndicator(link));
                 link.addEventListener('focus', () => moveIndicator(link));
-                link.addEventListener('mouseleave', hideIndicator);
-                link.addEventListener('blur', hideIndicator);
+                link.addEventListener('mouseleave', () => {
+                    // Only hide indicator if we're not leaving the active link
+                    if (link !== activeLink) {
+                        hideIndicator();
+                    }
+                });
+                link.addEventListener('blur', () => {
+                    // Only hide indicator if we're not blurring the active link
+                    if (link !== activeLink) {
+                        hideIndicator();
+                    }
+                });
             });
-
-            hideIndicator();
         } else {
             // Classic (non-bento) pages: highlight active link
             const nav = this.querySelector('.navbar-nav');

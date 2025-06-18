@@ -100,6 +100,7 @@
 .bento-body .nav-link:focus {
     background: #cecece;
     color: #000;
+    opacity: 1 !important;
 }
 
 /* Nav links styling */
@@ -156,7 +157,7 @@ body {
         top 0.35s cubic-bezier(0.4, 0, 0.2, 1),
         height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
         opacity 0.2s;
-    opacity: 0;
+    opacity: 1;
     pointer-events: none;
 }
 
