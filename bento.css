@@ -5,31 +5,33 @@
 /* Filter Pills */
 .filter-pills {
     display: flex;
-    gap: 1rem;
+    gap: 0.6rem;
     margin-top: 2rem;
     flex-wrap: wrap;
 }
 
 .filter-pill {
-    padding: 0.5rem 1.5rem;
-    border: none;
+    padding: 0.3rem 1.3rem;
+    border: 1.8px solid #5a5a5a;
     border-radius: 2rem;
-    background: white;
-    color: #666;
-    font-size: 0.9rem;
+    color: #5a5a5a;
+    opacity: 40%;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.612);
 }
 
 .filter-pill:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px);
+    opacity: 100%;
 }
 
 .filter-pill.active {
-    background: #000;
-    color: white;
+    opacity: 100%;
+    background-color: rgba(255, 255, 255, 0.75);
+    color: #000;
+    border: 1.8px solid #000;
 }
 
 .bento-grid {
