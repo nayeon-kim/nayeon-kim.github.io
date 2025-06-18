@@ -494,7 +494,7 @@
 }
 
 /* Link Styles for Bento */
-.bento-body a:not(.btn):not(.floating-button):not(.nav-link):not(.nav-logo) {
+.bento-body a:not(.btn):not(.floating-button):not(.nav-link):not(.nav-logo):not(.card-category):not(.card-content) {
     color: #000;
     text-decoration: none;
     position: relative;
@@ -502,7 +502,7 @@
     font-weight: 700;
 }
 
-.bento-body a:not(.btn):not(.floating-button):not(.nav-link):not(.nav-logo)::after {
+.bento-body a:not(.btn):not(.floating-button):not(.nav-link):not(.nav-logo):not(.card-category):not(.card-content)::after {
     content: '';
     position: absolute;
     width: 0;
@@ -513,8 +513,37 @@
     transition: width 0.3s ease;
 }
 
-.bento-body a:not(.btn):not(.floating-button):not(.nav-link):not(.nav-logo):hover::after {
+.bento-body a:not(.btn):not(.floating-button):not(.nav-link):not(.nav-logo):not(.card-category):not(.card-content):hover::after {
     width: 100%;
+}
+
+/* Override for card-title to prevent black underline */
+.bento-body .card-title {
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+/* Stronger override to prevent any black underline effects on card-title */
+.bento-body .card-title,
+.bento-body .card-content .card-title,
+.bento-body a .card-title {
+    color: #fff !important;
+    text-decoration: none !important;
+    background: none !important;
+}
+
+/* Hide any black underlines that might be applied to card-title */
+.bento-body .card-title::after,
+.bento-body .card-content .card-title::after,
+.bento-body a .card-title::after {
+    background-color: #000 !important;
+    display: none !important;
+}
+
+/* But allow the white underline we defined specifically for home-card */
+.home-card .card-title::after {
+    background-color: #fff !important;
+    display: block !important;
 }
 
 /* Nav bar links */
@@ -525,42 +554,117 @@
 }
 
 /* Home Card Meta Styling */
+.home-card {
+    position: relative;
+    height: 300px;
+}
+
+.home-card .card-content {
+    padding: 1em;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-card .image-wrapper {
+    position: relative;
+    flex: 1;
+    margin-bottom: 0;
+    height: calc(100% - 1em);
+}
+
+.home-card .image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 0.5rem;
+}
+
+.home-card:hover .image-wrapper::before {
+    opacity: 1;
+}
+
 .home-card .card-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    z-index: 2;
+}
+
+.home-card:hover .card-meta {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .home-card .card-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #181818;
-  line-height: 1.2;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    position: relative;
+}
+
+.home-card .card-title::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #fff;
+    transition: width 0.3s ease;
+}
+
+.home-card .card-title:hover::after {
+    width: 100%;
 }
 
 .home-card .card-category {
-  display: inline-flex;
-  align-items: center;
-  font-size: .7rem;
-  font-weight: 400;
-  color: #181818;
-  border: 2px solid #181818;
-  border-radius: 2rem;
-  padding: 0.2em 1em 0.2em 1em;
-  background: #fff;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
-  pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    font-size: .7rem;
+    font-weight: 400;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 2rem;
+    padding: 0.2em 1em 0.2em 1em;
+    background: transparent;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
 }
 
-.home-card:hover .card-category {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+.home-card .card-category:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.home-card .card-category:active {
+    transform: translateY(0);
 }
 
 .home-card img {
-  margin-bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-bottom: 0;
+    border-radius: 0.5rem;
 } 
