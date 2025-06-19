@@ -541,6 +541,9 @@
     .bento-about .exp-info {
         padding-left: 0 !important;
     }
+    .desktop-spacer {
+        display: none !important;
+    }
 }
 
 .bento-card.about-card .profile-img {
