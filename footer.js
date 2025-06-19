@@ -8,7 +8,7 @@ class Footer extends HTMLElement {
         this.innerHTML = `
             <div class="container">
                 <footer class="d-flex flex-wrap-reverse justify-content-center">
-                    <p class="d-flex align-items-center mb-0 me-md-auto">&copy; 2024 Nayeon Kim. All rights reserved. </p>
+                    <p class="d-flex align-items-center mb-0 me-md-auto">&copy; 2025 Nayeon Kim. Built with care and coffee.</p>
                     <ul class="footer-nav nav col-md-4 justify-content-end">
                         <li class="nav-item p-2">
                             <a href="mailto:hellonaykim@gmail.com?subject=Hello! Let's Chat." class="social-icon" title="Email">

@@ -329,6 +329,8 @@
 .bento-about .bento-card {
     background: none;
     box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
 }
 
 .bento-about .bento-card:hover {
@@ -337,7 +339,7 @@
 }
 
 .bento-about .left-content {
-    grid-column: 1 / span 7;
+    grid-column: 1 / span 6;
     grid-row: 1 / span 4;
     background: none;
     box-shadow: none;
@@ -377,10 +379,10 @@
 }
 
 .bento-about .profile-img {
-    width: 120px;
+    width: 140px;
     height: auto;
     border-radius: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .bento-about .subtitle {
@@ -457,6 +459,19 @@
 
     .play-card {
         grid-column: span 6;
+    }
+    
+    /* Exclude about page from 6-column grid */
+    .bento-about .bento-grid {
+        grid-template-columns: repeat(12, 1fr);
+    }
+    
+    .bento-about .left-content {
+        grid-column: 1 / span 6;
+    }
+    
+    .bento-about .right-content {
+        grid-column: 8 / span 5;
     }
 }
 
