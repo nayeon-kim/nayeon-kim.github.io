@@ -97,8 +97,8 @@
 
 /* Art Cards */
 .art-card {
-    grid-column: span 3;
-    grid-row: span 2;
+    grid-column: span 3 !important;
+    grid-row: span 3 !important;
     padding: 0;
     position: relative;
     opacity: 1;
@@ -451,6 +451,7 @@
     .work-card,
     .art-card {
         grid-column: span 3;
+        grid-row: span 3;
     }
 
     .about-card {
