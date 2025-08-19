@@ -11,12 +11,12 @@
   },
   "author": "nayeon kim",
   "license": "ISC",
-	"type": "module",
+  "type": "module",
   "dependencies": {
-    "node-fetch": "^3.3.1"
+    "node-fetch": "^3.3.1",
+    "staticrypt": "^3.5.4"
   },
   "devDependencies": {
-    "vite": "^5.1.4"
+    "vite": "^7.0.6"
   }
-	
 }
