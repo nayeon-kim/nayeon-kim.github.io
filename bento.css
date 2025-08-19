@@ -37,7 +37,7 @@
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: 1fr;
+    grid-auto-rows: auto;
     gap: 1.5rem;
     padding: 2rem 0;
 }
@@ -679,6 +679,14 @@
     bottom: 0;
     left: 0;
     right: 0;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .home-card .image-wrapper {
@@ -705,17 +713,6 @@
 
 .home-card:hover .image-wrapper::before {
     opacity: 1;
-}
-
-.home-card .card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
-    pointer-events: none;
-    z-index: 2;
 }
 
 .home-card:hover .card-meta {
