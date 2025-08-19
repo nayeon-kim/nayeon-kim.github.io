@@ -173,12 +173,25 @@
 				const artCards = document.querySelectorAll('.art-card');
 				const grid = document.querySelector('.bento-grid');
 
+				// Add click functionality for expanding cards
+				artCards.forEach(card => {
+					card.addEventListener('click', function() {
+						console.log('Card clicked!');
+						// Toggle expanded class on clicked card
+						this.classList.toggle('expanded');
+						console.log('Expanded class:', this.classList.contains('expanded'));
+					});
+				});
+
 				filterPills.forEach(pill => {
 					pill.addEventListener('click', function() {
 						// Remove active class from all pills
 						filterPills.forEach(p => p.classList.remove('active'));
 						// Add active class to clicked pill
 						this.classList.add('active');
+
+						// Remove expanded state from all cards when filtering
+						artCards.forEach(card => card.classList.remove('expanded'));
 
 						const filter = this.getAttribute('data-filter');
 

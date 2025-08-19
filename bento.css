@@ -98,17 +98,24 @@
 
 /* Art Cards */
 .art-card {
-    grid-column: span 3 !important;
-    grid-row: span 3 !important;
+    grid-column: span 3;
+    grid-row: span 3;
     padding: 0;
     position: relative;
     opacity: 1;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, grid-column 0.3s ease, grid-row 0.3s ease;
     transform: translateY(0);
     cursor: pointer;
     aspect-ratio: 1;
     min-height: 0;
     min-width: 0;
+}
+
+.art-card.expanded {
+    grid-column: span 6;
+    grid-row: span 6;
+    z-index: 10;
+    aspect-ratio: auto;
 }
 
 .art-card.hidden {
