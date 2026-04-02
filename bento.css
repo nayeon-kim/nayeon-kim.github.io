@@ -207,26 +207,26 @@
     grid-column: span 4;
 }
 
-/* Work page specific styling */
+/* Work page: full-bleed image with title overlaid bottom-left */
 .bento-work .work-card .card-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    padding: 0;
+    display: block;
     position: relative;
     overflow: hidden;
+    min-height: 360px;
+    padding: 0;
 }
 
-.bento-work .work-card .text-content {
-    flex: 1;
-    padding: 1.5rem;
+/* Used by the text overlay to tint the gradient based on the image. */
+.bento-work .work-card {
+    --overlay-rgb: 0, 0, 0;
 }
 
 .bento-work .work-card .image-wrapper {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 360px;
+    height: 100%;
     overflow: hidden;
-    flex-shrink: 0;
 }
 
 .bento-work .work-card img {
@@ -243,7 +243,78 @@
 }
 
 .bento-work .work-card .text-content {
-    flex: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 1.25rem 1.5rem 1.5rem;
+    text-align: right;
+    background: none;
+}
+
+.bento-work .work-card .text-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Tint the background using the dominant (sampled) image color. */
+    background: linear-gradient(
+        to top,
+        rgba(var(--overlay-rgb), 0.65) 0%,
+        rgba(var(--overlay-rgb), 0.28) 42%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bento-work .work-card .text-content h3 {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.15;
+    position: relative;
+    z-index: 1;
+}
+
+.bento-work .work-card .text-content .company {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+    opacity: 1;
+}
+
+.bento-work .work-card .text-content .title-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: flex-end;
+    color: rgba(255, 255, 255, 0.8);
+    gap: 0.5rem;
+    text-transform: uppercase;
+}
+
+.bento-work .work-card .text-content .coming-soon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1;
+    font-size: 0.6rem;
+    font-style: normal;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    padding: 0.28rem 0.5rem 0.22rem;
+    border-radius: 0.5rem;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 /* General work card styling (for home page and other pages) */
@@ -276,9 +347,18 @@
 }
 
 .coming-soon {
-    font-size: 0.9rem;
-    color: #666;
-    font-style: italic;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-style: normal;
+    color: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    padding: 0.2rem 0.65rem;
+    border-radius: 0.5rem;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    text-transform: uppercase;
 }
 
 /* About Card */
