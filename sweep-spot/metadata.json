@@ -1,0 +1,5 @@
+{
+  "name": "SF Sweep",
+  "description": "Avoid parking tickets in San Francisco with real-time street cleaning alerts and map-based schedules.",
+  "requestFramePermissions": ["geolocation"]
+}

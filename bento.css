@@ -129,6 +129,100 @@
     height: 100%;
 }
 
+.tech-card .card-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f3f3;
+}
+
+.tech-card-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(44, 44, 44, 0.28);
+    line-height: 0;
+}
+
+.tech-card-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.locked-project-modal {
+    border: none;
+    border-radius: 1.25rem;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.16);
+}
+
+.locked-project-modal .modal-body {
+    padding: 2rem;
+}
+
+.locked-project-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.25rem;
+    color: #2c2c2c;
+}
+
+.locked-project-copy {
+    margin: 0 0 1.25rem;
+    color: #5f5f63;
+    font-size: 0.98rem;
+    line-height: 1.5;
+}
+
+.locked-project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.locked-project-input {
+    border-radius: 0.9rem;
+    border: 1px solid rgba(60, 60, 67, 0.16);
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    color: #2c2c2c;
+    box-shadow: none;
+}
+
+.locked-project-input:focus {
+    border-color: rgba(44, 44, 44, 0.28);
+    box-shadow: 0 0 0 3px rgba(44, 44, 44, 0.08);
+}
+
+.locked-project-feedback {
+    min-height: 1.25rem;
+    margin: 0;
+    font-size: 0.85rem;
+    color: #b42318;
+}
+
+.locked-project-feedback.is-success {
+    color: #027a48;
+}
+
+.locked-project-submit {
+    align-self: flex-start;
+    padding: 0.75rem 1.1rem;
+    border-radius: 9999px;
+    background: #1e1e1e;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.locked-project-submit:hover {
+    background: #333;
+    color: #fff;
+}
+
 .art-card img {
     width: 100%;
     height: 100%;
