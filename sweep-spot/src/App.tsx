@@ -55,9 +55,52 @@ export default function App() {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markerPos, setMarkerPos] = useState(SF_CENTER);
   const [address, setAddress] = useState('');
+  const [queriedAddress, setQueriedAddress] = useState('San Francisco, CA');
   const [status, setStatus] = useState<StatusResult | null>(null);
   const [loading, setLoading] = useState(false);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+  const formatLatLngLabel = useCallback((lat: number, lng: number) => {
+    return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  }, []);
+
+  const simplifyAddress = useCallback((value: string) => {
+    const parts = value.split(',').map(part => part.trim()).filter(Boolean);
+    if (parts.length <= 1) return value;
+
+    const trimmed = parts.filter((part, index) => {
+      if (index === parts.length - 1 && /^(usa|us|united states|united states of america)$/i.test(part)) {
+        return false;
+      }
+
+      return true;
+    }).map((part, index, arr) => {
+      if (index === arr.length - 1) {
+        return part.replace(/\s+\d{5}(?:-\d{4})?$/, '').trim();
+      }
+
+      return part;
+    });
+
+    return trimmed.join(', ');
+  }, []);
+
+  const reverseGeocode = useCallback((lat: number, lng: number) => {
+    if (!window.google?.maps?.Geocoder) {
+      setQueriedAddress(formatLatLngLabel(lat, lng));
+      return;
+    }
+
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+      if (status === 'OK' && results && results.length > 0) {
+        setQueriedAddress(simplifyAddress(results[0].formatted_address));
+        return;
+      }
+
+      setQueriedAddress(formatLatLngLabel(lat, lng));
+    });
+  }, [formatLatLngLabel, simplifyAddress]);
 
   const fetchSweepingData = useCallback(async (lat: number, lng: number) => {
     setLoading(true);
@@ -114,9 +157,10 @@ export default function App() {
     if (e.latLng) {
       const newPos = { lat: e.latLng.lat(), lng: e.latLng.lng() };
       setMarkerPos(newPos);
+      reverseGeocode(newPos.lat, newPos.lng);
       fetchSweepingData(newPos.lat, newPos.lng);
     }
-  }, [fetchSweepingData]);
+  }, [fetchSweepingData, reverseGeocode]);
 
   const onPlaceChanged = () => {
     if (autocompleteRef.current) {
@@ -126,6 +170,9 @@ export default function App() {
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng()
         };
+        const displayAddress = simplifyAddress(place.formatted_address || place.name || formatLatLngLabel(newPos.lat, newPos.lng));
+        setAddress(displayAddress);
+        setQueriedAddress(displayAddress);
         setMarkerPos(newPos);
         map?.panTo(newPos);
         map?.setZoom(18);
@@ -139,6 +186,7 @@ export default function App() {
       navigator.geolocation.getCurrentPosition((pos) => {
         const newPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         setMarkerPos(newPos);
+        reverseGeocode(newPos.lat, newPos.lng);
         map?.panTo(newPos);
         map?.setZoom(18);
         fetchSweepingData(newPos.lat, newPos.lng);
@@ -148,8 +196,9 @@ export default function App() {
 
   useEffect(() => {
     // Initial fetch
+    reverseGeocode(SF_CENTER.lat, SF_CENTER.lng);
     fetchSweepingData(SF_CENTER.lat, SF_CENTER.lng);
-  }, [fetchSweepingData]);
+  }, [fetchSweepingData, reverseGeocode]);
 
   const statusContent = loading ? (
     <div className="flex-1 flex flex-col items-center justify-center space-y-4">
@@ -160,6 +209,7 @@ export default function App() {
     <div className="space-y-5">
       <div className="flex items-start justify-between gap-4">
         <div>
+          <p className="mb-2 text-sm font-medium text-gray-400">{queriedAddress}</p>
           <h2 className="mb-1 text-3xl font-bold tracking-tight">
             {status.status === 'RED' ? 'Move Your Car' :
              status.status === 'ORANGE' ? 'Move Soon' : 'Safe to Park'}
