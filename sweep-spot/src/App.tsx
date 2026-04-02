@@ -151,6 +151,62 @@ export default function App() {
     fetchSweepingData(SF_CENTER.lat, SF_CENTER.lng);
   }, [fetchSweepingData]);
 
+  const statusContent = loading ? (
+    <div className="flex-1 flex flex-col items-center justify-center space-y-4">
+      <div className="w-12 h-12 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin" />
+      <p className="text-gray-500 font-medium">Checking schedules...</p>
+    </div>
+  ) : status ? (
+    <div className="space-y-5">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="mb-1 text-3xl font-bold tracking-tight">
+            {status.status === 'RED' ? 'Move Your Car' :
+             status.status === 'ORANGE' ? 'Move Soon' : 'Safe to Park'}
+          </h2>
+          <p className={cn(
+            "text-lg font-semibold flex items-center gap-2",
+            status.status === 'RED' ? "text-red-600" :
+            status.status === 'ORANGE' ? "text-orange-500" : "text-emerald-600"
+          )}>
+            {status.status === 'RED' ? <AlertTriangle className="w-5 h-5" /> :
+             status.status === 'ORANGE' ? <Clock className="w-5 h-5" /> : <CheckCircle className="w-5 h-5" />}
+            {status.message}
+          </p>
+        </div>
+
+        <div className={cn(
+          "flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl",
+          status.status === 'RED' ? "bg-red-50 text-red-600" :
+          status.status === 'ORANGE' ? "bg-orange-50 text-orange-600" : "bg-emerald-50 text-emerald-600"
+        )}>
+          <MapPin className="h-8 w-8" />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="rounded-2xl bg-gray-50 p-4">
+          <p className="mb-1 text-xs font-bold uppercase tracking-wider text-gray-400">Next Cleaning</p>
+          <p className="text-sm font-bold text-gray-800">
+            {status.nextDate ? status.nextDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'N/A'}
+          </p>
+        </div>
+        <div className="rounded-2xl bg-gray-50 p-4">
+          <p className="mb-1 text-xs font-bold uppercase tracking-wider text-gray-400">Countdown</p>
+          <p className="text-sm font-bold text-gray-800">{status.countdown || 'N/A'}</p>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+        <div className="mb-2 flex items-center gap-3">
+          <Clock className="h-5 w-5 text-blue-600" />
+          <p className="font-bold text-blue-900">Cleaning Window</p>
+        </div>
+        <p className="font-medium text-blue-800">{status.window}</p>
+      </div>
+    </div>
+  ) : null;
+
   if (loadError || !googleMapsApiKey) {
     const errorTitle = googleMapsApiKey ? 'Google Maps Failed to Load' : 'Google Maps API Key Required';
     const errorBody = googleMapsApiKey
@@ -186,7 +242,7 @@ export default function App() {
   if (!isLoaded) return <div className="h-screen w-full flex items-center justify-center bg-gray-50">Loading SF Sweep...</div>;
 
   return (
-    <div className="h-screen w-full flex flex-col bg-white overflow-hidden font-sans text-gray-900">
+    <div className="h-screen w-full overflow-hidden bg-white font-sans text-gray-900 md:relative">
       {/* Search Overlay */}
       <div className="absolute top-4 left-4 right-4 z-10 flex gap-2">
         <div className="relative flex-1">
@@ -215,8 +271,8 @@ export default function App() {
         </button>
       </div>
 
-      {/* Map Section (40%) */}
-      <div className="h-[45%] w-full relative">
+      {/* Map Section */}
+      <div className="relative h-[calc(100vh-19rem)] min-h-[18rem] w-full md:h-full">
         <GoogleMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={SF_CENTER}
@@ -232,75 +288,23 @@ export default function App() {
         </GoogleMap>
       </div>
 
-      {/* Status Card (60%) */}
+      {/* Mobile Status Sheet */}
       <motion.div 
-        className="flex-1 bg-white rounded-t-[32px] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] z-20 relative px-6 pt-8 flex flex-col"
+        className="relative z-20 flex flex-col rounded-t-[32px] bg-white px-6 pt-8 pb-10 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] md:hidden"
         initial={false}
-        animate={{ height: '55%' }}
+        animate={{ y: 0 }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
       >
         <div className="absolute top-3 left-1/2 h-1.5 w-12 -translate-x-1/2 rounded-full bg-gray-200" />
-
-        <div className="flex flex-col h-full">
-          {loading ? (
-            <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-              <div className="w-12 h-12 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin" />
-              <p className="text-gray-500 font-medium">Checking schedules...</p>
-            </div>
-          ) : status ? (
-            <div className="space-y-6">
-              {/* Status Indicator */}
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2 className="text-3xl font-bold tracking-tight mb-1">
-                    {status.status === 'RED' ? 'Move Your Car' : 
-                     status.status === 'ORANGE' ? 'Move Soon' : 'Safe to Park'}
-                  </h2>
-                  <p className={cn(
-                    "text-lg font-semibold flex items-center gap-2",
-                    status.status === 'RED' ? "text-red-600" :
-                    status.status === 'ORANGE' ? "text-orange-500" : "text-emerald-600"
-                  )}>
-                    {status.status === 'RED' ? <AlertTriangle className="w-5 h-5" /> : 
-                     status.status === 'ORANGE' ? <Clock className="w-5 h-5" /> : <CheckCircle className="w-5 h-5" />}
-                    {status.message}
-                  </p>
-                </div>
-                
-                <div className={cn(
-                  "w-16 h-16 rounded-2xl flex items-center justify-center",
-                  status.status === 'RED' ? "bg-red-50 text-red-600" :
-                  status.status === 'ORANGE' ? "bg-orange-50 text-orange-600" : "bg-emerald-50 text-emerald-600"
-                )}>
-                  <MapPin className="w-8 h-8" />
-                </div>
-              </div>
-
-              {/* Details Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-4 rounded-2xl">
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Next Cleaning</p>
-                  <p className="text-sm font-bold text-gray-800">
-                    {status.nextDate ? status.nextDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'N/A'}
-                  </p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-2xl">
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Countdown</p>
-                  <p className="text-sm font-bold text-gray-800">{status.countdown || 'N/A'}</p>
-                </div>
-              </div>
-
-              <div className="bg-blue-50 p-5 rounded-2xl border border-blue-100">
-                <div className="flex items-center gap-3 mb-2">
-                  <Clock className="w-5 h-5 text-blue-600" />
-                  <p className="font-bold text-blue-900">Cleaning Window</p>
-                </div>
-                <p className="text-blue-800 font-medium">{status.window}</p>
-              </div>
-            </div>
-          ) : null}
-        </div>
+        <div>{statusContent}</div>
       </motion.div>
+
+      {/* Desktop Floating Status Card */}
+      <div className="pointer-events-none absolute inset-x-6 bottom-6 z-20 hidden md:flex md:justify-end">
+        <div className="pointer-events-auto w-full max-w-md rounded-[28px] bg-white/94 p-6 shadow-[0_18px_48px_rgba(0,0,0,0.16)] backdrop-blur-sm">
+          {statusContent}
+        </div>
+      </div>
     </div>
   );
 }
