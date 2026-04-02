@@ -1,4 +1,9 @@
+html {
+	background-color: #f8f8f8;
+}
+
 body {
+	margin: 0;
 	/*	padding: 0;*/
 	font-family: 'Nunito Sans', sans-serif;
 /*	font-family: 'General Sans', sans-serif;*/
