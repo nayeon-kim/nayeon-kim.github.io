@@ -5,8 +5,8 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, Autocomplete } from '@react-google-maps/api';
-import { motion, AnimatePresence } from 'motion/react';
-import { Search, Navigation, MapPin, Clock, AlertTriangle, CheckCircle, Info, ChevronUp, ChevronDown } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Search, Navigation, MapPin, Clock, AlertTriangle, CheckCircle } from 'lucide-react';
 import { calculateSweepingStatus, SweepingSchedule, StatusResult } from './lib/sweeping-logic';
 import { cn } from './lib/utils';
 
@@ -57,7 +57,6 @@ export default function App() {
   const [address, setAddress] = useState('');
   const [status, setStatus] = useState<StatusResult | null>(null);
   const [loading, setLoading] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const fetchSweepingData = useCallback(async (lat: number, lng: number) => {
@@ -235,19 +234,12 @@ export default function App() {
 
       {/* Status Card (60%) */}
       <motion.div 
-        className={cn(
-          "flex-1 bg-white rounded-t-[32px] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] z-20 relative px-6 pt-8 flex flex-col",
-          isExpanded ? "h-[85%]" : "h-[55%]"
-        )}
+        className="flex-1 bg-white rounded-t-[32px] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] z-20 relative px-6 pt-8 flex flex-col"
         initial={false}
-        animate={{ height: isExpanded ? '85%' : '55%' }}
+        animate={{ height: '55%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
       >
-        {/* Drag Handle / Toggle */}
-        <button 
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-gray-200 rounded-full"
-        />
+        <div className="absolute top-3 left-1/2 h-1.5 w-12 -translate-x-1/2 rounded-full bg-gray-200" />
 
         <div className="flex flex-col h-full">
           {loading ? (
@@ -305,46 +297,8 @@ export default function App() {
                 </div>
                 <p className="text-blue-800 font-medium">{status.window}</p>
               </div>
-
-              {/* Info Section */}
-              <AnimatePresence>
-                {isExpanded && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    className="space-y-4 pt-4 border-t border-gray-100"
-                  >
-                    <div className="flex items-start gap-3 text-gray-600">
-                      <Info className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm leading-relaxed">
-                        Street sweeping is suspended on most major holidays. 
-                        Always check posted signs as they are the final authority.
-                      </p>
-                    </div>
-                    <div className="p-4 bg-gray-50 rounded-2xl">
-                      <h4 className="font-bold text-sm mb-2">Pro Tip</h4>
-                      <p className="text-sm text-gray-600">
-                        SF parking tickets for street sweeping are typically $80+. 
-                        Set a reminder for 30 minutes before the window starts.
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           ) : null}
-        </div>
-
-        {/* Footer Action */}
-        <div className="mt-auto pb-8 pt-4">
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
-          >
-            {isExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
-            {isExpanded ? 'Show Less' : 'View Details'}
-          </button>
         </div>
       </motion.div>
     </div>
