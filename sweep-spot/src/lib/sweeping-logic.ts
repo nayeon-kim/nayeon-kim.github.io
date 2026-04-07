@@ -10,6 +10,9 @@ export interface SweepingSchedule {
   cnn: string;
   cnnrightleft: string;
   blockside: string;
+  corridor?: string;
+  limits?: string;
+  distance_m?: string;
   holidays?: string;
 }
 
@@ -21,6 +24,7 @@ export interface StatusResult {
   nextDate: Date | null;
   window: string;
   countdown: string;
+  debugSummary?: string[];
 }
 
 const SF_HOLIDAYS = [
@@ -93,6 +97,28 @@ function parseHourString(value: string): [number, number] | null {
   return [hours, 0];
 }
 
+function formatTime(value: string): string {
+  const parsed = parseHourString(value);
+  if (!parsed) return value;
+
+  const [hours, minutes] = parsed;
+  const period = hours >= 12 ? 'pm' : 'am';
+  const normalizedHours = hours % 12 || 12;
+
+  if (minutes === 0) {
+    return `${normalizedHours}${period}`;
+  }
+
+  return `${normalizedHours}:${String(minutes).padStart(2, '0')}${period}`;
+}
+
+function formatWeekLabel(weekNum: number): string {
+  if (weekNum === 1) return '1st';
+  if (weekNum === 2) return '2nd';
+  if (weekNum === 3) return '3rd';
+  return `${weekNum}th`;
+}
+
 export function calculateSweepingStatus(currentTime: Date, schedules: SweepingSchedule[]): StatusResult {
   try {
     if (!schedules || !Array.isArray(schedules) || schedules.length === 0) {
@@ -101,7 +127,8 @@ export function calculateSweepingStatus(currentTime: Date, schedules: SweepingSc
         message: 'No sweeping scheduled',
         nextDate: null,
         window: 'N/A',
-        countdown: ''
+        countdown: '',
+        debugSummary: []
       };
     }
 
@@ -152,7 +179,8 @@ export function calculateSweepingStatus(currentTime: Date, schedules: SweepingSc
         message: 'Safe for a while',
         nextDate: null,
         window: 'N/A',
-        countdown: ''
+        countdown: '',
+        debugSummary: []
       };
     }
 
@@ -188,8 +216,14 @@ export function calculateSweepingStatus(currentTime: Date, schedules: SweepingSc
       status,
       message,
       nextDate: next.date,
-      window: `${next.schedule.weekday}, ${next.schedule.fromhour} - ${next.schedule.tohour}`,
-      countdown: formatCountdown(diffMs)
+      window: `${next.schedule.weekday}, ${formatActiveWeeks(next.schedule)} weeks, ${formatTime(next.schedule.fromhour)} - ${formatTime(next.schedule.tohour)}`,
+      countdown: formatCountdown(diffMs),
+      debugSummary: [
+        `Chosen row: CNN ${next.schedule.cnn} | ${next.schedule.blockside || next.schedule.cnnrightleft || 'unknown'} | ${next.schedule.weekday} ${next.schedule.fromhour}-${next.schedule.tohour}`,
+        `Active weeks: ${formatActiveWeeks(next.schedule)}`,
+        `Next event: ${next.date.toLocaleString('en-US')}`,
+        `Hours until event: ${diffHours.toFixed(2)}`
+      ]
     };
   } catch (err) {
     console.error('Error in calculateSweepingStatus:', err);
@@ -198,9 +232,15 @@ export function calculateSweepingStatus(currentTime: Date, schedules: SweepingSc
       message: 'Error calculating status',
       nextDate: null,
       window: 'N/A',
-      countdown: ''
+      countdown: '',
+      debugSummary: []
     };
   }
+}
+
+function formatActiveWeeks(schedule: SweepingSchedule): string {
+  const activeWeeks = [1, 2, 3, 4, 5].filter((weekNum) => isWeekActive(schedule, weekNum));
+  return activeWeeks.length ? activeWeeks.map(formatWeekLabel).join(' & ') : 'none';
 }
 
 function formatCountdown(ms: number): string {
